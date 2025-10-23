@@ -7,33 +7,48 @@
 <style>
 body {
   font-family: Arial, sans-serif;
-  padding: 20px;
-  background-color: #222;
+  margin: 0;
+  padding: 0;
+  background-image: url('https://res.cloudinary.com/eventmobi/image/upload/v1761237992/_James%20Assets/.test%20app%20assets/Abstract%20Backgrounds/Haunted%20Background/2151153754.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   color: #fff;
   text-align: center;
-  position: relative;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
+
+/* Transparent black form container */
+.form-container {
+  background-color: rgba(0, 0, 0, 0.75); /* 75% opacity */
+  padding: 30px;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 500px;
+  box-sizing: border-box;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+}
+
 label {
   display: block;
   font-size: 12pt;
   margin-top: 15px;
   margin-bottom: 5px;
   text-align: left;
-  width: 60%;
-  margin-left: auto;
-  margin-right: auto;
 }
+
 input {
-  width: 60%;
+  width: 100%;
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
   box-sizing: border-box;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
   font-size: 16px;
 }
+
 button {
   margin-top: 20px;
   padding: 10px 15px;
@@ -44,9 +59,11 @@ button {
   cursor: pointer;
   font-weight: bold;
 }
+
 button:hover {
   background-color: #555;
 }
+
 /* Discreet admin button at top-right */
 #admin-button {
   position: fixed;
@@ -57,6 +74,7 @@ button:hover {
   background-color: #444;
   border-radius: 5px;
 }
+
 #admin-section {
   display: none;
   margin-top: 30px;
@@ -65,31 +83,33 @@ button:hover {
 </head>
 <body>
 
-<h1>Ghoul Swap Form</h1>
+<div class="form-container">
+  <h1>Ghoul Swap Form</h1>
 
-<!-- User Form -->
-<div id="user-form">
-  <label for="codename">Code Name:</label>
-  <input type="text" id="codename" placeholder="Enter your code name">
+  <!-- User Form -->
+  <div id="user-form">
+    <label for="codename">Code Name:</label>
+    <input type="text" id="codename" placeholder="Enter your code name">
 
-  <label for="gender">Gender:</label>
-  <input type="text" id="gender" placeholder="Enter your gender">
+    <label for="gender">Gender:</label>
+    <input type="text" id="gender" placeholder="Enter your gender">
 
-  <label for="link">Link (optional):</label>
-  <input type="text" id="link" placeholder="Paste your link here">
+    <label for="link">Link (optional):</label>
+    <input type="text" id="link" placeholder="Paste your (Shoppee, Lazada, Shein, Uniqlo, Starbucks, Zalora) link here">
 
-  <button type="button" onclick="submitForm()">Submit</button>
+    <button type="button" onclick="submitForm()">Submit</button>
+  </div>
+
+  <!-- Admin Section -->
+  <div id="admin-section">
+    <h2>Admin Panel</h2>
+    <button type="button" onclick="downloadEntries()">Download All Entries</button>
+    <p style="margin-top:10px; font-size:12pt;">All entries are stored in localStorage.</p>
+  </div>
 </div>
 
 <!-- Discreet Admin Button -->
 <button id="admin-button" onclick="promptAdmin()">Admin</button>
-
-<!-- Admin Section -->
-<div id="admin-section">
-  <h2>Admin Panel</h2>
-  <button type="button" onclick="downloadEntries()">Download All Entries</button>
-  <p style="margin-top:10px; font-size:12pt;">All entries are stored in localStorage.</p>
-</div>
 
 <script>
 // Load previous entries from localStorage
