@@ -1,55 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Input Form</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      padding: 20px;
-      text-align: center;
-      background-color: #222; /* Dark background so white labels are visible */
-      color: #fff;
-    }
-    label {
-      display: block;
-      font-size: 12pt;
-      margin-top: 15px;
-      margin-bottom: 5px;
-      text-align: left;
-      width: 60%;
-      margin-left: auto;
-      margin-right: auto;
-    }
-    input {
-      width: 60%;
-      padding: 10px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      box-sizing: border-box;
-      display: block;
-      margin-left: auto;
-      margin-right: auto;
-      font-size: 16px;
-    }
-    button {
-      margin-top: 20px;
-      padding: 10px 15px;
-      background-color: #333;
-      color: #fff;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      font-weight: bold;
-    }
-    button:hover {
-      background-color: #555;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ghoul Swap Form</title>
+<style>
+body {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+  background-color: #222;
+  color: #fff;
+  text-align: center;
+}
+label {
+  display: block;
+  font-size: 12pt;
+  margin-top: 15px;
+  margin-bottom: 5px;
+  text-align: left;
+  width: 60%;
+  margin-left: auto;
+  margin-right: auto;
+}
+input {
+  width: 60%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 16px;
+}
+button {
+  margin-top: 20px;
+  padding: 10px 15px;
+  background-color: #333;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+}
+button:hover {
+  background-color: #555;
+}
+#admin-section {
+  display: none;
+  margin-top: 30px;
+}
+</style>
 </head>
 <body>
 
+<h1>Ghoul Swap Form</h1>
+
+<!-- User Form -->
+<div id="user-form">
   <label for="codename">Code Name:</label>
   <input type="text" id="codename" placeholder="Enter your code name">
 
@@ -60,50 +68,81 @@
   <input type="text" id="link" placeholder="Paste your link here">
 
   <button type="button" onclick="submitForm()">Submit</button>
+</div>
 
-  <script>
-    // Load saved values on page load
-    window.onload = function() {
-      if (localStorage.getItem('codename')) {
-        document.getElementById('codename').value = localStorage.getItem('codename');
-      }
-      if (localStorage.getItem('gender')) {
-        document.getElementById('gender').value = localStorage.getItem('gender');
-      }
-      if (localStorage.getItem('link')) {
-        document.getElementById('link').value = localStorage.getItem('link');
-      }
-    }
+<hr style="margin:40px 0; border-color:#555;">
 
-    function submitForm() {
-      const codename = document.getElementById('codename').value;
-      const gender = document.getElementById('gender').value;
-      const link = document.getElementById('link').value;
+<!-- Admin Login -->
+<h2>Admin Login</h2>
+<label for="admin-pass">Password:</label>
+<input type="password" id="admin-pass" placeholder="Enter admin password">
+<button type="button" onclick="loginAdmin()">Login</button>
 
-      // Only Code Name and Gender are mandatory
-      if (!codename || !gender) {
-        alert('Please fill out both Code Name and Gender!');
-        return;
-      }
+<!-- Admin Section -->
+<div id="admin-section">
+  <h2>Admin Panel</h2>
+  <button type="button" onclick="downloadEntries()">Download All Entries</button>
+  <p style="margin-top:10px; font-size:12pt;">All entries are stored in localStorage.</p>
+</div>
 
-      // Save values temporarily (optional)
-      localStorage.setItem('codename', codename);
-      localStorage.setItem('gender', gender);
-      localStorage.setItem('link', link);
+<script>
+// Load previous entries from localStorage
+let entries = JSON.parse(localStorage.getItem('ghoulEntries')) || [];
 
-      alert(`Code Name: ${codename}\nGender: ${gender}\nLink: ${link || '(none)'}`);
+function submitForm() {
+  const codename = document.getElementById('codename').value.trim();
+  const gender = document.getElementById('gender').value.trim();
+  const link = document.getElementById('link').value.trim();
 
-      // Clear input fields
-      document.getElementById('codename').value = '';
-      document.getElementById('gender').value = '';
-      document.getElementById('link').value = '';
+  if (!codename || !gender) {
+    alert('Please fill out both Code Name and Gender!');
+    return;
+  }
 
-      // Clear saved data
-      localStorage.removeItem('codename');
-      localStorage.removeItem('gender');
-      localStorage.removeItem('link');
-    }
-  </script>
+  // Save entry
+  entries.push({ codename, gender, link });
+  localStorage.setItem('ghoulEntries', JSON.stringify(entries));
+
+  alert('Entry submitted successfully!');
+
+  // Clear fields
+  document.getElementById('codename').value = '';
+  document.getElementById('gender').value = '';
+  document.getElementById('link').value = '';
+}
+
+// Admin login
+function loginAdmin() {
+  const password = document.getElementById('admin-pass').value;
+  if (password === 'escape2025') {
+    document.getElementById('admin-section').style.display = 'block';
+    alert('Welcome Admin!');
+  } else {
+    alert('Incorrect password!');
+  }
+}
+
+// Download entries as CSV (Excel compatible)
+function downloadEntries() {
+  if (entries.length === 0) {
+    alert('No entries to download.');
+    return;
+  }
+
+  let csv = 'Code Name,Gender,Link\n';
+  entries.forEach(entry => {
+    csv += `"${entry.codename}","${entry.gender}","${entry.link}"\n`;
+  });
+
+  const blob = new Blob([csv], { type: 'text/csv' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'GhoulSwapEntries.csv';
+  a.click();
+  URL.revokeObjectURL(url);
+}
+</script>
 
 </body>
 </html>
