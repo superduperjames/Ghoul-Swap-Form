@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Input Form</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      text-align: center;
+      background-color: #222; /* Dark background so white labels are visible */
+      color: #fff;
+    }
+    label {
+      display: block;
+      font-size: 12pt;
+      margin-top: 15px;
+      margin-bottom: 5px;
+      text-align: left;
+      width: 60%;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    input {
+      width: 60%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-sizing: border-box;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      font-size: 16px;
+    }
+    button {
+      margin-top: 20px;
+      padding: 10px 15px;
+      background-color: #333;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    button:hover {
+      background-color: #555;
+    }
+  </style>
+</head>
+<body>
+
+  <label for="codename">Code Name:</label>
+  <input type="text" id="codename" placeholder="Enter your code name">
+
+  <label for="gender">Gender:</label>
+  <input type="text" id="gender" placeholder="Enter your gender">
+
+  <label for="link">Link (optional):</label>
+  <input type="text" id="link" placeholder="Paste your link here">
+
+  <button type="button" onclick="submitForm()">Submit</button>
+
+  <script>
+    // Load saved values on page load
+    window.onload = function() {
+      if (localStorage.getItem('codename')) {
+        document.getElementById('codename').value = localStorage.getItem('codename');
+      }
+      if (localStorage.getItem('gender')) {
+        document.getElementById('gender').value = localStorage.getItem('gender');
+      }
+      if (localStorage.getItem('link')) {
+        document.getElementById('link').value = localStorage.getItem('link');
+      }
+    }
+
+    function submitForm() {
+      const codename = document.getElementById('codename').value;
+      const gender = document.getElementById('gender').value;
+      const link = document.getElementById('link').value;
+
+      // Only Code Name and Gender are mandatory
+      if (!codename || !gender) {
+        alert('Please fill out both Code Name and Gender!');
+        return;
+      }
+
+      // Save values temporarily (optional)
+      localStorage.setItem('codename', codename);
+      localStorage.setItem('gender', gender);
+      localStorage.setItem('link', link);
+
+      alert(`Code Name: ${codename}\nGender: ${gender}\nLink: ${link || '(none)'}`);
+
+      // Clear input fields
+      document.getElementById('codename').value = '';
+      document.getElementById('gender').value = '';
+      document.getElementById('link').value = '';
+
+      // Clear saved data
+      localStorage.removeItem('codename');
+      localStorage.removeItem('gender');
+      localStorage.removeItem('link');
+    }
+  </script>
+
+</body>
+</html>
