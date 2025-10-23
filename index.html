@@ -11,6 +11,7 @@ body {
   background-color: #222;
   color: #fff;
   text-align: center;
+  position: relative;
 }
 label {
   display: block;
@@ -46,6 +47,16 @@ button {
 button:hover {
   background-color: #555;
 }
+/* Discreet admin button at top-right */
+#admin-button {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  padding: 5px 10px;
+  font-size: 10pt;
+  background-color: #444;
+  border-radius: 5px;
+}
 #admin-section {
   display: none;
   margin-top: 30px;
@@ -70,13 +81,8 @@ button:hover {
   <button type="button" onclick="submitForm()">Submit</button>
 </div>
 
-<hr style="margin:40px 0; border-color:#555;">
-
-<!-- Admin Login -->
-<h2>Admin Login</h2>
-<label for="admin-pass">Password:</label>
-<input type="password" id="admin-pass" placeholder="Enter admin password">
-<button type="button" onclick="loginAdmin()">Login</button>
+<!-- Discreet Admin Button -->
+<button id="admin-button" onclick="promptAdmin()">Admin</button>
 
 <!-- Admin Section -->
 <div id="admin-section">
@@ -111,13 +117,13 @@ function submitForm() {
   document.getElementById('link').value = '';
 }
 
-// Admin login
-function loginAdmin() {
-  const password = document.getElementById('admin-pass').value;
+// Admin prompt
+function promptAdmin() {
+  const password = prompt("Enter admin password:");
   if (password === 'escape2025') {
     document.getElementById('admin-section').style.display = 'block';
     alert('Welcome Admin!');
-  } else {
+  } else if (password !== null) {
     alert('Incorrect password!');
   }
 }
