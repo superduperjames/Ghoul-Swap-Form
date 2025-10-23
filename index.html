@@ -26,15 +26,23 @@ body {
   background-color: rgba(0, 0, 0, 0.75); /* 75% opacity */
   padding: 30px;
   border-radius: 10px;
-  width: 130%;
+  width: 90%;
   max-width: 500px;
   box-sizing: border-box;
   box-shadow: 0 5px 15px rgba(0,0,0,0.5);
 }
 
+h1 {
+  margin-bottom: 20px;
+}
+
+p {
+  margin: 10px 0;
+}
+
 label {
   display: block;
-  font-size: 10pt;
+  font-size: 12pt;
   margin-top: 15px;
   margin-bottom: 5px;
   text-align: left;
@@ -86,6 +94,12 @@ button:hover {
 <div class="form-container">
   <h1>Ghoul Swap Form</h1>
 
+  <!-- Short spooky intro -->
+  <p style="font-size:14pt; margin-bottom:20px;">
+    Enter your Code Name and Gender below to join the exchange.<br>
+    Put your wishes here — only those who leave their entries will receive a gift in return! 🎁💀
+  </p>
+
   <!-- User Form -->
   <div id="user-form">
     <label for="codename">Code Name:</label>
@@ -94,8 +108,18 @@ button:hover {
     <label for="gender">Gender:</label>
     <input type="text" id="gender" placeholder="Enter your gender">
 
-    <label for="link">Link (optional):</label>
-    <input type="text" id="link" placeholder="Paste your (Shoppee, Lazada, Shein, Zalora, etc.) link here">
+    <p style="font-size:12pt; margin-top:15px; margin-bottom:5px;">
+      Put your 3 wishes here. It can either be just the item description or links from Shoppee, Lazada, Zalora, Shein, Uniqlo, etc.
+    </p>
+
+    <label for="wish1">Wish Item 1:</label>
+    <input type="text" id="wish1" placeholder="Enter your first wish">
+
+    <label for="wish2">Wish Item 2:</label>
+    <input type="text" id="wish2" placeholder="Enter your second wish">
+
+    <label for="wish3">Wish Item 3:</label>
+    <input type="text" id="wish3" placeholder="Enter your third wish">
 
     <button type="button" onclick="submitForm()">Submit</button>
   </div>
@@ -118,7 +142,9 @@ let entries = JSON.parse(localStorage.getItem('ghoulEntries')) || [];
 function submitForm() {
   const codename = document.getElementById('codename').value.trim();
   const gender = document.getElementById('gender').value.trim();
-  const link = document.getElementById('link').value.trim();
+  const wish1 = document.getElementById('wish1').value.trim();
+  const wish2 = document.getElementById('wish2').value.trim();
+  const wish3 = document.getElementById('wish3').value.trim();
 
   if (!codename || !gender) {
     alert('Please fill out both Code Name and Gender!');
@@ -126,7 +152,7 @@ function submitForm() {
   }
 
   // Save entry
-  entries.push({ codename, gender, link });
+  entries.push({ codename, gender, wish1, wish2, wish3 });
   localStorage.setItem('ghoulEntries', JSON.stringify(entries));
 
   alert('Entry submitted successfully!');
@@ -134,7 +160,9 @@ function submitForm() {
   // Clear fields
   document.getElementById('codename').value = '';
   document.getElementById('gender').value = '';
-  document.getElementById('link').value = '';
+  document.getElementById('wish1').value = '';
+  document.getElementById('wish2').value = '';
+  document.getElementById('wish3').value = '';
 }
 
 // Admin prompt
@@ -155,9 +183,9 @@ function downloadEntries() {
     return;
   }
 
-  let csv = 'Code Name,Gender,Link\n';
+  let csv = 'Code Name,Gender,Wish Item 1,Wish Item 2,Wish Item 3\n';
   entries.forEach(entry => {
-    csv += `"${entry.codename}","${entry.gender}","${entry.link}"\n`;
+    csv += `"${entry.codename}","${entry.gender}","${entry.wish1}","${entry.wish2}","${entry.wish3}"\n`;
   });
 
   const blob = new Blob([csv], { type: 'text/csv' });
