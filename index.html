@@ -142,6 +142,24 @@
       border-radius: 5px;
     }
 
+    .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      background: none;
+      border: none;
+      color: white;
+      font-size: 12pt;
+      cursor: pointer;
+      font-weight: 600;
+      z-index: 210;
+      transition: color 0.3s ease, text-shadow 0.3s ease;
+    }
+    .close-btn:hover {
+      color: #ff5555;
+      text-shadow: 0 0 8px rgba(255,0,0,0.8);
+    }
+
     /* Menu Panel */
     .menu-panel {
       position: fixed;
@@ -231,6 +249,7 @@
 
   <!-- Admin Panel -->
   <div class="admin-panel" id="adminPanel">
+    <button class="close-btn" id="closeAdmin">Close ✕</button>
     <h3>Admin Access</h3>
     <input type="password" id="adminPassword" placeholder="Enter password">
     <button id="adminLogin">Login</button>
@@ -273,6 +292,7 @@
 
   <!-- Menu Panel -->
   <div class="menu-panel" id="menuPanel">
+    <button class="close-btn" id="closeMenu">Close ✕</button>
     <h3>Starbucks Menu</h3>
     <div class="menu-item">
       <div class="image"></div>
@@ -322,11 +342,18 @@
     const exportBtn = document.getElementById('exportEntries');
     const clearBtn = document.getElementById('clearEntries');
     const seeMenu = document.getElementById('seeMenu');
+    const closeMenu = document.getElementById('closeMenu');
+    const closeAdmin = document.getElementById('closeAdmin');
 
     // Toggle Menu
     seeMenu.addEventListener('click', () => {
       menuPanel.classList.add('active');
       overlay.style.display = 'block';
+    });
+
+    closeMenu.addEventListener('click', () => {
+      menuPanel.classList.remove('active');
+      overlay.style.display = 'none';
     });
 
     overlay.addEventListener('click', () => {
@@ -339,6 +366,11 @@
     adminBtn.addEventListener('click', () => {
       adminPanel.classList.add('active');
       overlay.style.display = 'block';
+    });
+
+    closeAdmin.addEventListener('click', () => {
+      adminPanel.classList.remove('active');
+      overlay.style.display = 'none';
     });
 
     adminLogin.addEventListener('click', () => {
