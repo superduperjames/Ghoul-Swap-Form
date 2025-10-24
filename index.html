@@ -95,7 +95,7 @@ button:hover {
   <h1>Ghoul Swap Form</h1>
 
   <!-- Short spooky intro -->
-  <p style="font-size:10pt; margin-bottom:20px;">
+  <p style="font-size:14pt; margin-bottom:20px;">
     Enter your Real Name, Code Name, and Gender below to join the exchange.<br>
     Put your wishes here — only those who leave their entries will receive a gift in return! 🎁💀
   </p>
@@ -111,7 +111,7 @@ button:hover {
     <label for="gender">Gender:</label>
     <input type="text" id="gender" placeholder="Enter your gender">
 
-    <p style="font-size:9pt; margin-top:15px; margin-bottom:5px;">
+    <p style="font-size:12pt; margin-top:15px; margin-bottom:5px;">
       Put your 3 wishes here. It can either be just the item description or links from Shopee, Lazada, Zalora, Shein, Uniqlo, etc.
     </p>
 
@@ -131,6 +131,7 @@ button:hover {
   <div id="admin-section">
     <h2>Admin Panel</h2>
     <button type="button" onclick="downloadEntries()">Download All Entries</button>
+    <button type="button" onclick="clearEntries()">Clear All Entries</button>
     <p style="margin-top:10px; font-size:12pt;">All entries are stored in localStorage.</p>
   </div>
 </div>
@@ -200,6 +201,16 @@ function downloadEntries() {
   a.download = 'GhoulSwapEntries.csv';
   a.click();
   URL.revokeObjectURL(url);
+}
+
+// Clear all entries
+function clearEntries() {
+  const confirmClear = confirm("Are you sure you want to clear all entries? This cannot be undone!");
+  if (confirmClear) {
+    localStorage.removeItem('ghoulEntries');
+    entries = [];
+    alert('All entries have been cleared.');
+  }
 }
 </script>
 
