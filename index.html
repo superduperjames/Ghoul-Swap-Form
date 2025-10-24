@@ -291,95 +291,68 @@
   <button class="submit-btn" id="submitBtn">Submit Swap Gift Entry and Coffee Order</button>
 
   <!-- Menu Panel -->
-  <div class="menu-panel" id="menuPanel">
-    <button class="close-btn" id="closeMenu">Close ✕</button>
-    <h3>Featured Drinks</h3>
-    <div class="menu-item">
-      <div class="image"></div>
-      <div class="details">
-        <h4>Maple Cocoa Nibs Oatmilk Iced Shaken Espresso</h4>
-        <p>This luxurious creation wraps you in the warm, aromatic embrace of the Starbucks® Blonde Espresso Roast, harmonized with mellow cocoa and amber maple syrup.</p>
-      </div>
-    </div>
-    <div class="menu-item">
-      <div class="image"></div>
-      <div class="details">
-        <h4>Maple Cocoa Nibs Oatmilk Frappuccino® Blended Beverage</h4>
-        <p>Rich cocoa and maple syrup come together with silky oatmilk in a smooth blend that’s more than just sweet.</p>
-      </div>
-    </div>
-    <div class="menu-item">
-      <div class="image"></div>
-      <div class="details">
-        <h4>Honey Glazed Walnut Oatmilk Iced Shaken Espresso</h4>
-        <p>Swirls of roasted walnut syrup meet the sweet, vibrant Starbucks® Blonde Espresso Roast and velvety oatmilk, shaken over ice for refreshing twist.</p>
-      </div>
-    </div>
-    <div class="menu-item">
-      <div class="image"></div>
-      <div class="details">
-        <h4>Honey Glazed Walnut Oatmilk Frappuccino® Blended Beverage</h4>
-        <p>Roasted walnut syrup is blended with oatmilk and ice for a smooth, uplifting sip that’s as invigorating as an autumn breeze.</p>
-      </div>
-    </div>
-    <div class="menu-item">
-      <div class="image"></div>
-      <div class="details">
-        <h4>Pumpkin Spice Latte</h4>
-        <p>Mixed with rich pumpkin spice-flavored sauce and topped with whipped cream and real pumpkin-pie spices, the PSL is sure to tantalize your tastebuds.</p>
-      </div>
-    </div>
-        <h3>Brewed Coffee</h3>
-    <div class="menu-item">
-      <div class="image"></div>
-      <div class="details">
-        <h4>Hot Brewed Coffee</h4>
-        <p>Swing by and warm up while enjoying any of our three roasts brewed daily.</p>
-      </div>
-    </div>
-        <div class="menu-item">
-      <div class="image"></div>
-      <div class="details">
-        <h4>Salted Caramel Cold Brew</h4>
-        <p>Our Signature Starbucks Cold Brew flavored with salted caramel syrup, with a salted caramel flavored foam and drizzle of caramel syrup to finish the drink.</p>
-      </div>
-    </div>
-        <div class="menu-item">
-      <div class="image"></div>
-      <div class="details">
-        <h4>Nitro Vanilla Sweet Cream Cold Brew</h4>
-        <p>Served cold, straight from the tap, our Nitro Cold Brew is topped with a float of house-made vanilla sweet cream.</p>
-      </div>
-    </div>
-        <div class="menu-item">
-      <div class="image"></div>
-      <div class="details">
-        <h4>Nitro Cold Brew</h4>
-        <p>We're infusing it with nitrogen for a naturally sweet flavor and cascading, velvety crema. Perfection is served.</p>
-      </div>
-    </div>
-        <div class="menu-item">
-      <div class="image"></div>
-      <div class="details">
-        <h4>Cold Brew</h4>
-        <p>Starbucks® Cold Brew is made from our custom blend of beans grown to steep long and cold for a super-smooth flavor.</p>
-      </div>
-    </div>
-        <div class="menu-item">
-      <div class="image"></div>
-      <div class="details">
-        <h4>Vanilla Sweet Cream Cold Brew</h4>
-        <p>Just before serving, our slow-steeped custom blend Cold Brew is topped with a delicate float of house-made vanilla sweet cream that cascades throughout the cup.</p>
-      </div>
-    </div>
-        <div class="menu-item">
-      <div class="image"></div>
-      <div class="details">
-        <h4>Dark Caramel Nitro Cold Brew</h4>
-        <p>Nonfat milk Cold Foam elevates our Nitro Cold Brew with a touch of creaminess and flavor.</p>
-      </div>
-    </div>
+<div class="menu-panel" id="menuPanel">
+  <button class="close-btn" id="closeMenu">Close ✕</button>
+  <div class="menu-image-container">
+    <img src="YOUR_MENU_IMAGE_URL_HERE" alt="Full Menu" id="menuImage">
   </div>
+</div>
+
+<style>
+  /* Menu Panel Styles */
+  .menu-panel {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 90%;
+    max-width: 500px;
+    height: 100%;
+    background-color: #fff;
+    overflow-y: auto;
+    padding: 20px;
+    box-shadow: -4px 0 15px rgba(0,0,0,0.2);
+    transform: translateX(100%);
+    transition: transform 0.3s ease-in-out;
+    z-index: 1000;
+  }
+
+  .menu-panel.open {
+    transform: translateX(0);
+  }
+
+  .close-btn {
+    background: none;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    margin-bottom: 15px;
+  }
+
+  .menu-image-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  #menuImage {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+  }
+</style>
+
+<script>
+  // Open/Close Menu Panel
+  const menuPanel = document.getElementById('menuPanel');
+  const closeMenu = document.getElementById('closeMenu');
+
+  closeMenu.addEventListener('click', () => {
+    menuPanel.classList.remove('open');
+  });
+
+  // Example: open menu for demo
+  // menuPanel.classList.add('open');
+</script>
 
   <script>
     const overlay = document.getElementById('overlay');
