@@ -163,54 +163,37 @@
     /* Menu Panel */
     .menu-panel {
       position: fixed;
-      bottom: -100%;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 70%;
-      height: 80%;
-      background: rgba(0,0,0,0.95);
-      border-radius: 15px 15px 0 0;
+      top: 0;
+      right: 0;
+      width: 90%;
+      max-width: 500px;
+      height: 100%;
+      background-color: rgba(0,0,0,0.95);
       overflow-y: auto;
-      z-index: 150;
-      transition: bottom 0.5s ease;
       padding: 20px;
+      box-shadow: -4px 0 15px rgba(0,0,0,0.2);
+      transform: translateX(100%);
+      transition: transform 0.3s ease-in-out;
+      z-index: 1000;
+      border-radius: 0;
     }
 
     .menu-panel.active {
-      bottom: 10%;
+      transform: translateX(0);
     }
 
-    .menu-item {
+    .menu-image-container {
+      width: 100%;
       display: flex;
+      justify-content: center;
       align-items: center;
-      background: rgba(255,255,255,0.05);
-      padding: 10px;
+    }
+
+    #menuImage {
+      width: 100%;
+      height: auto;
+      object-fit: contain;
       border-radius: 10px;
-      margin-bottom: 15px;
-    }
-
-    .menu-item .image {
-      width: 70px;
-      height: 70px;
-      background: #888;
-      border-radius: 10px;
-      margin-right: 15px;
-      flex-shrink: 0;
-    }
-
-    .menu-item .details {
-      flex: 1;
-    }
-
-    .menu-item h4 {
-      margin: 0 0 5px 0;
-      color: #fff;
-    }
-
-    .menu-item p {
-      margin: 0;
-      font-size: 11pt;
-      color: rgba(255,255,255,0.8);
     }
 
     .see-menu-btn {
@@ -234,7 +217,7 @@
       }
       .menu-panel {
         width: 90%;
-        height: 80%;
+        height: 90%;
       }
     }
   </style>
@@ -291,68 +274,12 @@
   <button class="submit-btn" id="submitBtn">Submit Swap Gift Entry and Coffee Order</button>
 
   <!-- Menu Panel -->
-<div class="menu-panel" id="menuPanel">
-  <button class="close-btn" id="closeMenu">Close ✕</button>
-  <div class="menu-image-container">
-    <img src="YOUR_MENU_IMAGE_URL_HERE" alt="Full Menu" id="menuImage">
+  <div class="menu-panel" id="menuPanel">
+    <button class="close-btn" id="closeMenu">Close ✕</button>
+    <div class="menu-image-container">
+      <img src="YOUR_MENU_IMAGE_URL_HERE" alt="Full Menu" id="menuImage">
+    </div>
   </div>
-</div>
-
-<style>
-  /* Menu Panel Styles */
-  .menu-panel {
-    position: fixed;
-    top: 0;
-    right: 0;
-    width: 90%;
-    max-width: 500px;
-    height: 100%;
-    background-color: #fff;
-    overflow-y: auto;
-    padding: 20px;
-    box-shadow: -4px 0 15px rgba(0,0,0,0.2);
-    transform: translateX(100%);
-    transition: transform 0.3s ease-in-out;
-    z-index: 1000;
-  }
-
-  .menu-panel.open {
-    transform: translateX(0);
-  }
-
-  .close-btn {
-    background: none;
-    border: none;
-    font-size: 16px;
-    cursor: pointer;
-    margin-bottom: 15px;
-  }
-
-  .menu-image-container {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-  }
-
-  #menuImage {
-    width: 100%;
-    height: auto;
-    object-fit: contain;
-  }
-</style>
-
-<script>
-  // Open/Close Menu Panel
-  const menuPanel = document.getElementById('menuPanel');
-  const closeMenu = document.getElementById('closeMenu');
-
-  closeMenu.addEventListener('click', () => {
-    menuPanel.classList.remove('open');
-  });
-
-  // Example: open menu for demo
-  // menuPanel.classList.add('open');
-</script>
 
   <script>
     const overlay = document.getElementById('overlay');
@@ -365,7 +292,7 @@
     const exportBtn = document.getElementById('exportEntries');
     const clearBtn = document.getElementById('clearEntries');
     const seeMenu = document.getElementById('seeMenu');
-    const closeMenu = document.getElementById('closeMenu');
+    const closeMenuBtn = document.getElementById('closeMenu');
     const closeAdmin = document.getElementById('closeAdmin');
 
     // Toggle Menu
@@ -374,7 +301,7 @@
       overlay.style.display = 'block';
     });
 
-    closeMenu.addEventListener('click', () => {
+    closeMenuBtn.addEventListener('click', () => {
       menuPanel.classList.remove('active');
       overlay.style.display = 'none';
     });
