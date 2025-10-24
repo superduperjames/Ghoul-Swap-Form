@@ -3,305 +3,369 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ghoul Swap Form</title>
+<title>Ghoul Swap Gift & Coffee Order</title>
 <style>
-body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-  background-image: url('https://res.cloudinary.com/eventmobi/image/upload/v1761237992/_James%20Assets/.test%20app%20assets/Abstract%20Backgrounds/Haunted%20Background/2151153754.jpg');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  color: #fff;
-  text-align: center;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+  body {
+    font-family: 'Poppins', sans-serif;
+    background: url('https://res.cloudinary.com/eventmobi/image/upload/v1761237992/_James%20Assets/.test%20app%20assets/Abstract%20Backgrounds/Haunted%20Background/2151153754.jpg') no-repeat center center fixed;
+    background-size: cover;
+    color: white;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+  }
 
-/* Form Container */
-.form-container {
-  background-color: rgba(0, 0, 0, 0.75);
-  padding: 30px;
-  border-radius: 10px;
-  width: 90%;
-  max-width: 500px;
-  box-sizing: border-box;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.5);
-}
+  .container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+    margin: 40px auto;
+    width: 90%;
+    max-width: 1200px;
+  }
 
-h1 {
-  margin-bottom: 20px;
-}
+  .form-box {
+    background: rgba(0, 0, 0, 0.85);
+    padding: 30px;
+    border-radius: 15px;
+    width: 45%;
+    min-width: 320px;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+  }
 
-p {
-  margin: 10px 0;
-}
+  h1, h2 {
+    margin-bottom: 15px;
+  }
 
-label {
-  display: block;
-  font-size: 12pt;
-  margin-top: 15px;
-  margin-bottom: 5px;
-  text-align: left;
-}
+  p {
+    font-size: 14px;
+    margin-bottom: 20px;
+  }
 
-input, textarea {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  box-sizing: border-box;
-  font-size: 16px;
-}
+  label {
+    display: block;
+    text-align: left;
+    margin-bottom: 6px;
+    font-size: 12pt;
+    color: white;
+  }
 
-textarea {
-  height: 80px;
-  resize: vertical;
-}
+  input, textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+  }
 
-button {
-  margin-top: 20px;
-  padding: 10px 15px;
-  background-color: #333;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-weight: bold;
-}
-button:hover { background-color: #555; }
+  textarea {
+    resize: vertical;
+    min-height: 80px;
+  }
 
-/* Discreet Admin Button */
-#admin-button {
-  position: fixed;
-  top: 10px;
-  right: 10px;
-  padding: 5px 10px;
-  font-size: 10pt;
-  background-color: #444;
-  border-radius: 5px;
-}
+  button {
+    background-color: #8b0000;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
 
-#admin-section {
-  display: none;
-  margin-top: 30px;
-}
+  button:hover {
+    background-color: #b30000;
+  }
 
-/* Label + See Menu inline */
-.label-inline {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.label-inline a {
-  font-size: 11pt;
-  color: #ffcc66;
-  text-decoration: none;
-  cursor: pointer;
-}
-.label-inline a:hover { text-decoration: underline; }
+  /* Admin button */
+  #adminBtn {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    font-size: 12px;
+    background: rgba(255,255,255,0.2);
+    color: white;
+    border: 1px solid white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
 
-/* Modal Styles */
-#menuModal {
-  display: none;
-  position: fixed;
-  z-index: 1000;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  overflow: auto;
-  background-color: rgba(0,0,0,0.85);
-  backdrop-filter: blur(5px);
-  justify-content: center;
-  align-items: center;
-  opacity: 0;
-  transition: opacity 0.6s ease;
-}
-#menuModal.show { 
-  display: flex;
-  opacity: 1;
-}
+  /* Admin panel */
+  #adminPanel {
+    display: none;
+    background: rgba(0, 0, 0, 0.9);
+    padding: 20px;
+    border-radius: 10px;
+    width: 80%;
+    margin: 30px auto;
+  }
 
-.modal-content {
-  position: relative;
-  background-color: #222;
-  margin: auto;
-  padding: 15px;
-  border-radius: 10px;
-  width: 90%;
-  max-width: 600px;
-  height: 80vh;
-  display: flex;
-  flex-direction: column;
-  box-shadow: 0 0 30px rgba(255, 204, 102, 0.3);
-  animation: floatIn 0.7s ease forwards;
-}
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    color: white;
+  }
 
-.modal-content iframe {
-  flex: 1;
-  width: 100%;
-  border: none;
-  border-radius: 8px;
-}
+  th, td {
+    border: 1px solid #444;
+    padding: 8px;
+    text-align: left;
+  }
 
-.close {
-  color: #fff;
-  position: absolute;
-  top: 8px;
-  right: 15px;
-  font-size: 24px;
-  cursor: pointer;
-}
-.close:hover { color: #ffcc66; }
+  th {
+    background: #222;
+  }
 
-/* Floating fade animation */
-@keyframes floatIn {
-  from { transform: translateY(30px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
-}
+  /* Starbucks Modal */
+  .modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    padding-top: 80px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.8);
+  }
+
+  .modal-content {
+    background-color: #111;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #444;
+    width: 80%;
+    max-width: 800px;
+    height: 80vh;
+    overflow: hidden;
+    border-radius: 10px;
+  }
+
+  .modal iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    border-radius: 10px;
+  }
+
+  .close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+  .close:hover {
+    color: white;
+  }
+
+  @media (max-width: 768px) {
+    .form-box {
+      width: 90%;
+    }
+  }
 </style>
 </head>
 <body>
 
-<div class="form-container">
-  <h1>Ghoul Swap Form</h1>
+<!-- Admin Login Button -->
+<button id="adminBtn">Admin</button>
 
-  <p style="font-size:10pt; margin-bottom:20px;">
-    Enter your Real Name, Code Name, and Gender below to join the exchange.<br>
-    Reminder! only those who leave their entries will receive a gift in return! 🎁💀
-  </p>
+<div class="container">
+  <!-- Ghoul Swap Form -->
+  <div class="form-box">
+    <h1>🎃 Ghoul Swap Gift Entry 👻</h1>
+    <p>Enter your details below to join the exchange.<br>
+    Beware — only those who complete this form will receive a gift in return!</p>
 
-  <div id="user-form">
-    <label for="realname">Real Name:</label>
-    <input type="text" id="realname" placeholder="Enter your real name">
+    <form id="giftForm">
+      <label for="realName">Real Name (optional for Admin tracking)</label>
+      <input type="text" id="realName" name="realName">
 
-    <label for="codename">Code Name:</label>
-    <input type="text" id="codename" placeholder="Enter your code name">
+      <label for="codeName">Code Name *</label>
+      <input type="text" id="codeName" name="codeName" required>
 
-    <label for="gender">Gender:</label>
-    <input type="text" id="gender" placeholder="Enter your gender">
+      <label for="gender">Gender *</label>
+      <input type="text" id="gender" name="gender" required>
 
-    <p style="font-size:9pt; margin-top:15px; margin-bottom:5px;">
-      Put your 3 wishes here. It can either be just the item description or links from Shopee, Lazada, Zalora, Shein, Uniqlo, etc.
-    </p>
+      <label>Wish Item 1</label>
+      <input type="text" id="wish1" name="wish1">
 
-    <label for="wish1">Wish Item 1:</label>
-    <input type="text" id="wish1" placeholder="Enter your first wish">
+      <label>Wish Item 2</label>
+      <input type="text" id="wish2" name="wish2">
 
-    <label for="wish2">Wish Item 2:</label>
-    <input type="text" id="wish2" placeholder="Enter your second wish">
+      <label>Wish Item 3</label>
+      <input type="text" id="wish3" name="wish3">
 
-    <label for="wish3">Wish Item 3:</label>
-    <input type="text" id="wish3" placeholder="Enter your third wish">
-
-    <div class="label-inline">
-      <label for="coffee">Starbucks Coffee Order:</label>
-      <a onclick="openMenu()">See Menu ☕</a>
-    </div>
-    <textarea id="coffee" placeholder="Enter your coffee order (e.g., Iced White Mocha, Hot Americano, etc.)"></textarea>
-
-    <button type="button" onclick="submitForm()">Submit</button>
+      <button type="submit">Submit Gift Entry</button>
+    </form>
   </div>
 
-  <div id="admin-section">
-    <h2>Admin Panel</h2>
-    <button type="button" onclick="downloadEntries()">Download All Entries</button>
-    <button type="button" onclick="clearEntries()">Clear All Entries</button>
-    <p style="margin-top:10px; font-size:12pt;">All entries are stored in localStorage.</p>
+  <!-- Coffee Order Form -->
+  <div class="form-box">
+    <h2>☕ Coffee Order Form</h2>
+    <p>Put your favorite drink here! Click <b>“See Menu”</b> if you need ideas.</p>
+
+    <form id="coffeeForm">
+      <label for="coffee">Starbucks Coffee Order</label>
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <textarea id="coffee" name="coffee" placeholder="Write your coffee order here..."></textarea>
+        <button type="button" id="menuBtn" style="padding:8px 14px; background:#444;">See Menu</button>
+      </div>
+
+      <button type="submit">Submit Coffee Order</button>
+    </form>
   </div>
 </div>
 
-<button id="admin-button" onclick="promptAdmin()">Admin</button>
-
-<!-- Modal Popup -->
-<div id="menuModal">
+<!-- Starbucks Menu Modal -->
+<div id="menuModal" class="modal">
   <div class="modal-content">
-    <span class="close" onclick="closeMenu()">&times;</span>
-    <!-- Replace this PDF link -->
-    <iframe src="YOUR_STARBUCKS_MENU.pdf"></iframe>
+    <span class="close" id="closeMenu">&times;</span>
+    <iframe src="https://www.starbucks.ph/menu"></iframe>
   </div>
+</div>
+
+<!-- Admin Panel -->
+<div id="adminPanel">
+  <h2>Admin Panel</h2>
+  <p>Download all entries as Excel or clear all data.</p>
+  <button onclick="downloadExcel()">Download Entries</button>
+  <button onclick="clearEntries()">Clear Entries</button>
+  <table id="entriesTable">
+    <thead>
+      <tr>
+        <th>Real Name</th>
+        <th>Code Name</th>
+        <th>Gender</th>
+        <th>Wish 1</th>
+        <th>Wish 2</th>
+        <th>Wish 3</th>
+        <th>Coffee Order</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
 </div>
 
 <script>
-let entries = JSON.parse(localStorage.getItem('ghoulEntries')) || [];
+  const giftForm = document.getElementById('giftForm');
+  const coffeeForm = document.getElementById('coffeeForm');
+  const adminBtn = document.getElementById('adminBtn');
+  const adminPanel = document.getElementById('adminPanel');
 
-function submitForm() {
-  const realname = document.getElementById('realname').value.trim();
-  const codename = document.getElementById('codename').value.trim();
-  const gender = document.getElementById('gender').value.trim();
-  const wish1 = document.getElementById('wish1').value.trim();
-  const wish2 = document.getElementById('wish2').value.trim();
-  const wish3 = document.getElementById('wish3').value.trim();
-  const coffee = document.getElementById('coffee').value.trim();
+  // Starbucks modal logic
+  const menuBtn = document.getElementById('menuBtn');
+  const menuModal = document.getElementById('menuModal');
+  const closeMenu = document.getElementById('closeMenu');
 
-  if (!codename || !gender || !realname) {
-    alert('Please fill out your Real Name, Code Name, and Gender!');
-    return;
+  menuBtn.onclick = () => menuModal.style.display = "block";
+  closeMenu.onclick = () => menuModal.style.display = "none";
+  window.onclick = (event) => {
+    if (event.target == menuModal) menuModal.style.display = "none";
+  };
+
+  // Combine form submissions into one entry list
+  function getEntries() {
+    return JSON.parse(localStorage.getItem('giftEntries')) || [];
   }
 
-  entries.push({ realname, codename, gender, wish1, wish2, wish3, coffee });
-  localStorage.setItem('ghoulEntries', JSON.stringify(entries));
-  alert('Entry submitted successfully!');
-  document.querySelectorAll('#user-form input, #user-form textarea').forEach(el => el.value = '');
-}
-
-function promptAdmin() {
-  const password = prompt("Enter admin password:");
-  if (password === 'escape2025') {
-    document.getElementById('admin-section').style.display = 'block';
-    alert('Welcome Admin!');
-  } else if (password !== null) {
-    alert('Incorrect password!');
+  function saveEntries(entries) {
+    localStorage.setItem('giftEntries', JSON.stringify(entries));
   }
-}
 
-function downloadEntries() {
-  if (entries.length === 0) {
-    alert('No entries to download.');
-    return;
-  }
-  let csv = 'Real Name,Code Name,Gender,Wish Item 1,Wish Item 2,Wish Item 3,Starbucks Coffee Order\n';
-  entries.forEach(entry => {
-    csv += `"${entry.realname}","${entry.codename}","${entry.gender}","${entry.wish1}","${entry.wish2}","${entry.wish3}","${entry.coffee}"\n`;
+  giftForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+    const entries = getEntries();
+    const entry = {
+      realName: giftForm.realName.value,
+      codeName: giftForm.codeName.value,
+      gender: giftForm.gender.value,
+      wish1: giftForm.wish1.value,
+      wish2: giftForm.wish2.value,
+      wish3: giftForm.wish3.value,
+      coffee: ""
+    };
+    entries.push(entry);
+    saveEntries(entries);
+    alert("Gift entry saved!");
+    giftForm.reset();
   });
-  const blob = new Blob([csv], { type: 'text/csv' });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = 'GhoulSwapEntries.csv';
-  a.click();
-  URL.revokeObjectURL(url);
-}
 
-function clearEntries() {
-  const confirmClear = confirm("Are you sure you want to clear all entries? This cannot be undone!");
-  if (confirmClear) {
-    localStorage.removeItem('ghoulEntries');
-    entries = [];
-    alert('All entries have been cleared.');
-  }
-}
+  coffeeForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+    const entries = getEntries();
+    const latestEntry = entries[entries.length - 1];
+    if (latestEntry) {
+      latestEntry.coffee = coffeeForm.coffee.value;
+      saveEntries(entries);
+      alert("Coffee order saved!");
+      coffeeForm.reset();
+    } else {
+      alert("Please fill out the Ghoul Swap form first!");
+    }
+  });
 
-// Modal open/close
-function openMenu() {
-  const modal = document.getElementById('menuModal');
-  modal.classList.add('show');
-}
-function closeMenu() {
-  const modal = document.getElementById('menuModal');
-  modal.classList.remove('show');
-  setTimeout(() => modal.style.display = 'none', 600);
-}
-window.onclick = function(event) {
-  const modal = document.getElementById('menuModal');
-  if (event.target === modal) {
-    closeMenu();
+  // Admin login
+  adminBtn.addEventListener('click', function() {
+    const password = prompt("Enter admin password:");
+    if (password === "escape2025") {
+      loadEntries();
+      adminPanel.style.display = 'block';
+    } else {
+      alert("Incorrect password!");
+    }
+  });
+
+  function loadEntries() {
+    const entries = getEntries();
+    const tableBody = document.querySelector('#entriesTable tbody');
+    tableBody.innerHTML = '';
+    entries.forEach(entry => {
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td>${entry.realName}</td>
+        <td>${entry.codeName}</td>
+        <td>${entry.gender}</td>
+        <td>${entry.wish1}</td>
+        <td>${entry.wish2}</td>
+        <td>${entry.wish3}</td>
+        <td>${entry.coffee}</td>
+      `;
+      tableBody.appendChild(row);
+    });
   }
-};
+
+  function downloadExcel() {
+    const entries = getEntries();
+    if (entries.length === 0) return alert("No entries to download.");
+    let csv = 'Real Name,Code Name,Gender,Wish 1,Wish 2,Wish 3,Coffee Order\n';
+    entries.forEach(e => {
+      csv += `"${e.realName}","${e.codeName}","${e.gender}","${e.wish1}","${e.wish2}","${e.wish3}","${e.coffee}"\n`;
+    });
+    const blob = new Blob([csv], { type: 'text/csv' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'GhoulSwapEntries.csv';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  }
+
+  function clearEntries() {
+    if (confirm("Are you sure you want to clear all entries? This cannot be undone.")) {
+      localStorage.removeItem('giftEntries');
+      loadEntries();
+      alert("All entries cleared.");
+    }
+  }
 </script>
 
 </body>
