@@ -4,20 +4,26 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Ghoul Swap — Gifts & Coffee</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap');
 
     body {
       font-family: 'Montserrat', sans-serif;
-      background: url('https://res.cloudinary.com/eventmobi/image/upload/v1761237992/_James%20Assets/.test%20app%20assets/Abstract%20Backgrounds/Haunted%20Background/2151153754.jpg') center/cover no-repeat fixed;
       margin: 0;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ---------- FORM VIEW ---------- */
+    #formView {
+      background: url('https://res.cloudinary.com/eventmobi/image/upload/v1761237992/_James%20Assets/.test%20app%20assets/Abstract%20Backgrounds/Haunted%20Background/2151153754.jpg') center/cover no-repeat fixed;
       color: white;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: flex-start;
-      min-height: 100vh;
-      position: relative;
+      padding-bottom: 80px;
     }
 
     h1 {
@@ -74,10 +80,12 @@
       background: rgba(255, 255, 255, 0.85);
       font-size: 0.95rem;
       color: #222;
+      transition: 0.3s;
     }
 
-    textarea {
-      resize: vertical;
+    input:focus, textarea:focus {
+      background: rgba(255, 255, 255, 1);
+      outline: none;
     }
 
     .menu-button {
@@ -94,7 +102,7 @@
       background-color: #666;
     }
 
-    /* Slide-in from bottom */
+    /* Slide-up Menu Panel */
     .menu-panel {
       position: fixed;
       bottom: -100%;
@@ -139,7 +147,7 @@
       margin-bottom: 10px;
     }
 
-    /* Dramatic Final Submit Button */
+    /* Dramatic Submit Button */
     .final-submit {
       background: linear-gradient(45deg, #8b0000, #ff0000);
       color: white;
@@ -153,12 +161,17 @@
       display: block;
       transition: all 0.4s ease;
       box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 0 20px rgba(255, 0, 0, 0.5); }
+      50% { box-shadow: 0 0 35px rgba(255, 69, 0, 0.9); }
+      100% { box-shadow: 0 0 20px rgba(255, 0, 0, 0.5); }
     }
 
     .final-submit:hover {
       transform: scale(1.1);
-      box-shadow: 0 0 30px rgba(255, 0, 0, 0.8);
-      background: linear-gradient(45deg, #ff0000, #8b0000);
       letter-spacing: 1px;
     }
 
@@ -174,80 +187,144 @@
       border-radius: 6px;
       font-size: 0.85rem;
       cursor: pointer;
-      transition: background 0.3s ease, color 0.3s ease;
     }
 
-    .admin-btn:hover {
-      background: rgba(255, 255, 255, 0.4);
-      color: black;
+    /* ---------- ADMIN VIEW ---------- */
+    #adminView {
+      display: none;
+      background: #f8f8f8;
+      min-height: 100vh;
+      padding: 30px;
     }
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin-top: 20px;
+    }
+
+    table, th, td {
+      border: 1px solid #ccc;
+    }
+
+    th, td {
+      padding: 10px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #333;
+      color: white;
+    }
+
+    .admin-buttons {
+      margin-top: 20px;
+    }
+
+    .admin-buttons button {
+      padding: 10px 20px;
+      margin-right: 10px;
+      cursor: pointer;
+      border: none;
+      border-radius: 5px;
+      font-size: 0.95rem;
+    }
+
+    .export-btn { background: #28a745; color: white; }
+    .clear-btn { background: #dc3545; color: white; }
+    .back-btn { background: #6c757d; color: white; }
 
     @media (max-width: 768px) {
-      .menu-panel {
-        height: 90%;
-      }
       .form-container {
         flex-direction: column;
         align-items: center;
+      }
+      .menu-panel {
+        height: 90%;
       }
     }
   </style>
 </head>
 <body>
 
-  <!-- Discreet Admin Button -->
-  <button class="admin-btn" onclick="openAdmin()">Admin Login</button>
+  <!-- ===== FORM VIEW ===== -->
+  <div id="formView">
+    <button class="admin-btn" onclick="openAdmin()">Admin Login</button>
 
-  <h1>🎃 Ghoul Swap — Gifts & Coffee</h1>
-  <p class="intro">
-    Step into the mist and make your offering... Submit your Ghoul Swap entry and coffee order below.  
-    👻 Only those who dare to submit will receive a mysterious gift in return.
-  </p>
+    <h1>🎃 Ghoul Swap — Gifts & Coffee</h1>
+    <p class="intro">
+      Step into the mist and make your offering... Submit your Ghoul Swap entry and coffee order below.  
+      👻 Only those who dare to submit will receive a mysterious gift in return.
+    </p>
 
-  <div class="form-container">
-    <!-- Gift Entry Form -->
-    <div class="form-box">
-      <h2>🕸️ Ghoul Swap Gift Entry</h2>
-      <label for="realName">Real Name</label>
-      <input type="text" id="realName" placeholder="e.g. Maria Cruz" />
+    <div class="form-container">
+      <div class="form-box">
+        <h2>🕸️ Ghoul Swap Gift Entry</h2>
+        <label>Real Name</label>
+        <input type="text" id="realName" />
 
-      <label for="codeName">Code Name (*required)</label>
-      <input type="text" id="codeName" placeholder="e.g. NightWatcher" required />
+        <label>Code Name (*required)</label>
+        <input type="text" id="codeName" required />
 
-      <label for="gender">Gender (*required)</label>
-      <input type="text" id="gender" placeholder="e.g. Female" required />
+        <label>Gender (*required)</label>
+        <input type="text" id="gender" required />
 
-      <label for="wish1">Wish Item 1</label>
-      <input type="text" id="wish1" placeholder="Item description or store link" />
-      <label for="wish2">Wish Item 2</label>
-      <input type="text" id="wish2" placeholder="Item description or store link" />
-      <label for="wish3">Wish Item 3</label>
-      <input type="text" id="wish3" placeholder="Item description or store link" />
+        <label>Wish Item 1</label>
+        <input type="text" id="wish1" placeholder="Item description or store link" />
+        <label>Wish Item 2</label>
+        <input type="text" id="wish2" placeholder="Item description or store link" />
+        <label>Wish Item 3</label>
+        <input type="text" id="wish3" placeholder="Item description or store link" />
+      </div>
+
+      <div class="form-box">
+        <h2>☕ Coffee Order Form</h2>
+        <label>Starbucks Coffee Order</label>
+        <textarea id="coffeeOrder" rows="5" placeholder="e.g. Iced Caramel Macchiato, Tall, with less ice"></textarea>
+        <button class="menu-button" onclick="openMenu()">See Menu</button>
+      </div>
     </div>
 
-    <!-- Coffee Order Form -->
-    <div class="form-box">
-      <h2>☕ Coffee Order Form</h2>
-      <label for="coffeeOrder">Starbucks Coffee Order</label>
-      <textarea id="coffeeOrder" rows="5" placeholder="e.g. Iced Caramel Macchiato, Tall, with less ice"></textarea>
-      <button class="menu-button" onclick="openMenu()">See Menu</button>
+    <button class="final-submit" onclick="submitEntry()">Submit Swap Gift Entry and Coffee Order</button>
+
+    <!-- Slide-up Menu -->
+    <div class="menu-overlay" id="menuOverlay" onclick="closeMenu()"></div>
+    <div class="menu-panel" id="menuPanel">
+      <button class="close-menu" onclick="closeMenu()">Close Menu</button>
+      <h3 style="color:white;">Starbucks Coffee Menu</h3>
+      <p style="color:#ccc;">Browse the menu below for inspiration. 🍂</p>
+      <iframe src="https://superduperjames.github.io/starbucks-menu/" width="100%" height="600px" style="border:none; border-radius:8px;"></iframe>
     </div>
   </div>
 
-  <!-- Final Submit -->
-  <button class="final-submit">Submit Swap Gift Entry and Coffee Order</button>
+  <!-- ===== ADMIN VIEW ===== -->
+  <div id="adminView">
+    <h2>Ghoul Swap Entries</h2>
+    <table id="entriesTable">
+      <thead>
+        <tr>
+          <th>Real Name</th>
+          <th>Code Name</th>
+          <th>Gender</th>
+          <th>Wish 1</th>
+          <th>Wish 2</th>
+          <th>Wish 3</th>
+          <th>Coffee Order</th>
+          <th>Date & Time</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
 
-  <!-- Slide-in Menu Panel -->
-  <div class="menu-overlay" id="menuOverlay" onclick="closeMenu()"></div>
-  <div class="menu-panel" id="menuPanel">
-    <button class="close-menu" onclick="closeMenu()">Close Menu</button>
-    <h3 style="color:white;">Starbucks Coffee Menu</h3>
-    <p style="color:#ccc;">Browse the menu below for inspiration. 🍂</p>
-    <iframe src="https://superduperjames.github.io/ManilaEscape2025/" 
-      width="100%" height="600px" style="border:none; border-radius:8px;"></iframe>
+    <div class="admin-buttons">
+      <button class="export-btn" onclick="exportToExcel()">Export Entries (Excel)</button>
+      <button class="clear-btn" onclick="clearEntries()">Clear All Entries</button>
+      <button class="back-btn" onclick="goBack()">Back to Main Page</button>
+    </div>
   </div>
 
   <script>
+    // Menu controls
     function openMenu() {
       document.getElementById('menuPanel').classList.add('open');
       document.getElementById('menuOverlay').classList.add('show');
@@ -256,12 +333,90 @@
       document.getElementById('menuPanel').classList.remove('open');
       document.getElementById('menuOverlay').classList.remove('show');
     }
+
+    // Submit form and save data
+    function submitEntry() {
+      const entry = {
+        realName: document.getElementById('realName').value,
+        codeName: document.getElementById('codeName').value,
+        gender: document.getElementById('gender').value,
+        wish1: document.getElementById('wish1').value,
+        wish2: document.getElementById('wish2').value,
+        wish3: document.getElementById('wish3').value,
+        coffeeOrder: document.getElementById('coffeeOrder').value,
+        date: new Date().toLocaleString()
+      };
+
+      if (!entry.codeName || !entry.gender) {
+        alert("Please fill in the required fields: Code Name and Gender.");
+        return;
+      }
+
+      let entries = JSON.parse(localStorage.getItem('ghoulEntries') || "[]");
+      entries.push(entry);
+      localStorage.setItem('ghoulEntries', JSON.stringify(entries));
+
+      alert("Your entry has been saved! The spirits thank you 👻");
+      document.querySelectorAll('input, textarea').forEach(el => el.value = '');
+    }
+
+    // Admin access
     function openAdmin() {
       const password = prompt("Enter admin password:");
       if (password === "escape2025") {
-        window.location.href = "admin.html"; // You can replace this with your actual admin panel file
+        showAdmin();
       } else if (password) {
         alert("Incorrect password. The spirits deny you entry.");
+      }
+    }
+
+    function showAdmin() {
+      document.getElementById('formView').style.display = 'none';
+      document.getElementById('adminView').style.display = 'block';
+      loadEntries();
+    }
+
+    function goBack() {
+      document.getElementById('adminView').style.display = 'none';
+      document.getElementById('formView').style.display = 'block';
+    }
+
+    // Load entries into admin table
+    function loadEntries() {
+      const tbody = document.querySelector('#entriesTable tbody');
+      tbody.innerHTML = '';
+      const entries = JSON.parse(localStorage.getItem('ghoulEntries') || "[]");
+      entries.forEach(e => {
+        const row = `<tr>
+          <td>${e.realName || ''}</td>
+          <td>${e.codeName || ''}</td>
+          <td>${e.gender || ''}</td>
+          <td>${e.wish1 || ''}</td>
+          <td>${e.wish2 || ''}</td>
+          <td>${e.wish3 || ''}</td>
+          <td>${e.coffeeOrder || ''}</td>
+          <td>${e.date || ''}</td>
+        </tr>`;
+        tbody.innerHTML += row;
+      });
+    }
+
+    // Export to Excel
+    function exportToExcel() {
+      const entries = JSON.parse(localStorage.getItem('ghoulEntries') || "[]");
+      if (!entries.length) return alert("No entries to export.");
+      const ws = XLSX.utils.json_to_sheet(entries);
+      const wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, "Entries");
+      XLSX.writeFile(wb, "entries.xlsx");
+    }
+
+    // Clear all entries
+    function clearEntries() {
+      if (confirm("Are you sure you want to clear all entries?")) {
+        localStorage.removeItem('ghoulEntries');
+        loadEntries();
+        alert("All entries cleared.");
       }
     }
   </script>
