@@ -21,7 +21,7 @@ body {
   align-items: center;
 }
 
-/* Transparent black form container */
+/* Form Container */
 .form-container {
   background-color: rgba(0, 0, 0, 0.75);
   padding: 30px;
@@ -48,13 +48,18 @@ label {
   text-align: left;
 }
 
-input {
+input, textarea {
   width: 100%;
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
   box-sizing: border-box;
   font-size: 16px;
+}
+
+textarea {
+  height: 80px;
+  resize: vertical;
 }
 
 button {
@@ -67,12 +72,9 @@ button {
   cursor: pointer;
   font-weight: bold;
 }
+button:hover { background-color: #555; }
 
-button:hover {
-  background-color: #555;
-}
-
-/* Discreet admin button at top-right */
+/* Discreet Admin Button */
 #admin-button {
   position: fixed;
   top: 10px;
@@ -87,6 +89,80 @@ button:hover {
   display: none;
   margin-top: 30px;
 }
+
+/* Label + See Menu inline */
+.label-inline {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.label-inline a {
+  font-size: 11pt;
+  color: #ffcc66;
+  text-decoration: none;
+  cursor: pointer;
+}
+.label-inline a:hover { text-decoration: underline; }
+
+/* Modal Styles */
+#menuModal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.85);
+  backdrop-filter: blur(5px);
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+#menuModal.show { 
+  display: flex;
+  opacity: 1;
+}
+
+.modal-content {
+  position: relative;
+  background-color: #222;
+  margin: auto;
+  padding: 15px;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 600px;
+  height: 80vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 0 30px rgba(255, 204, 102, 0.3);
+  animation: floatIn 0.7s ease forwards;
+}
+
+.modal-content iframe {
+  flex: 1;
+  width: 100%;
+  border: none;
+  border-radius: 8px;
+}
+
+.close {
+  color: #fff;
+  position: absolute;
+  top: 8px;
+  right: 15px;
+  font-size: 24px;
+  cursor: pointer;
+}
+.close:hover { color: #ffcc66; }
+
+/* Floating fade animation */
+@keyframes floatIn {
+  from { transform: translateY(30px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
 </style>
 </head>
 <body>
@@ -94,13 +170,11 @@ button:hover {
 <div class="form-container">
   <h1>Ghoul Swap Form</h1>
 
-  <!-- Short spooky intro -->
-  <p style="font-size:14pt; margin-bottom:20px;">
+  <p style="font-size:10pt; margin-bottom:20px;">
     Enter your Real Name, Code Name, and Gender below to join the exchange.<br>
-    Put your wishes here — only those who leave their entries will receive a gift in return! 🎁💀
+    Reminder! only those who leave their entries will receive a gift in return! 🎁💀
   </p>
 
-  <!-- User Form -->
   <div id="user-form">
     <label for="realname">Real Name:</label>
     <input type="text" id="realname" placeholder="Enter your real name">
@@ -111,7 +185,7 @@ button:hover {
     <label for="gender">Gender:</label>
     <input type="text" id="gender" placeholder="Enter your gender">
 
-    <p style="font-size:12pt; margin-top:15px; margin-bottom:5px;">
+    <p style="font-size:9pt; margin-top:15px; margin-bottom:5px;">
       Put your 3 wishes here. It can either be just the item description or links from Shopee, Lazada, Zalora, Shein, Uniqlo, etc.
     </p>
 
@@ -124,10 +198,15 @@ button:hover {
     <label for="wish3">Wish Item 3:</label>
     <input type="text" id="wish3" placeholder="Enter your third wish">
 
+    <div class="label-inline">
+      <label for="coffee">Starbucks Coffee Order:</label>
+      <a onclick="openMenu()">See Menu ☕</a>
+    </div>
+    <textarea id="coffee" placeholder="Enter your coffee order (e.g., Iced White Mocha, Hot Americano, etc.)"></textarea>
+
     <button type="button" onclick="submitForm()">Submit</button>
   </div>
 
-  <!-- Admin Section -->
   <div id="admin-section">
     <h2>Admin Panel</h2>
     <button type="button" onclick="downloadEntries()">Download All Entries</button>
@@ -136,11 +215,18 @@ button:hover {
   </div>
 </div>
 
-<!-- Discreet Admin Button -->
 <button id="admin-button" onclick="promptAdmin()">Admin</button>
 
+<!-- Modal Popup -->
+<div id="menuModal">
+  <div class="modal-content">
+    <span class="close" onclick="closeMenu()">&times;</span>
+    <!-- Replace this PDF link -->
+    <iframe src="YOUR_STARBUCKS_MENU.pdf"></iframe>
+  </div>
+</div>
+
 <script>
-// Load previous entries from localStorage
 let entries = JSON.parse(localStorage.getItem('ghoulEntries')) || [];
 
 function submitForm() {
@@ -150,28 +236,19 @@ function submitForm() {
   const wish1 = document.getElementById('wish1').value.trim();
   const wish2 = document.getElementById('wish2').value.trim();
   const wish3 = document.getElementById('wish3').value.trim();
+  const coffee = document.getElementById('coffee').value.trim();
 
   if (!codename || !gender || !realname) {
     alert('Please fill out your Real Name, Code Name, and Gender!');
     return;
   }
 
-  // Save entry
-  entries.push({ realname, codename, gender, wish1, wish2, wish3 });
+  entries.push({ realname, codename, gender, wish1, wish2, wish3, coffee });
   localStorage.setItem('ghoulEntries', JSON.stringify(entries));
-
   alert('Entry submitted successfully!');
-
-  // Clear fields
-  document.getElementById('realname').value = '';
-  document.getElementById('codename').value = '';
-  document.getElementById('gender').value = '';
-  document.getElementById('wish1').value = '';
-  document.getElementById('wish2').value = '';
-  document.getElementById('wish3').value = '';
+  document.querySelectorAll('#user-form input, #user-form textarea').forEach(el => el.value = '');
 }
 
-// Admin prompt
 function promptAdmin() {
   const password = prompt("Enter admin password:");
   if (password === 'escape2025') {
@@ -182,18 +259,15 @@ function promptAdmin() {
   }
 }
 
-// Download entries as CSV (Excel compatible)
 function downloadEntries() {
   if (entries.length === 0) {
     alert('No entries to download.');
     return;
   }
-
-  let csv = 'Real Name,Code Name,Gender,Wish Item 1,Wish Item 2,Wish Item 3\n';
+  let csv = 'Real Name,Code Name,Gender,Wish Item 1,Wish Item 2,Wish Item 3,Starbucks Coffee Order\n';
   entries.forEach(entry => {
-    csv += `"${entry.realname}","${entry.codename}","${entry.gender}","${entry.wish1}","${entry.wish2}","${entry.wish3}"\n`;
+    csv += `"${entry.realname}","${entry.codename}","${entry.gender}","${entry.wish1}","${entry.wish2}","${entry.wish3}","${entry.coffee}"\n`;
   });
-
   const blob = new Blob([csv], { type: 'text/csv' });
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
@@ -203,7 +277,6 @@ function downloadEntries() {
   URL.revokeObjectURL(url);
 }
 
-// Clear all entries
 function clearEntries() {
   const confirmClear = confirm("Are you sure you want to clear all entries? This cannot be undone!");
   if (confirmClear) {
@@ -212,6 +285,23 @@ function clearEntries() {
     alert('All entries have been cleared.');
   }
 }
+
+// Modal open/close
+function openMenu() {
+  const modal = document.getElementById('menuModal');
+  modal.classList.add('show');
+}
+function closeMenu() {
+  const modal = document.getElementById('menuModal');
+  modal.classList.remove('show');
+  setTimeout(() => modal.style.display = 'none', 600);
+}
+window.onclick = function(event) {
+  const modal = document.getElementById('menuModal');
+  if (event.target === modal) {
+    closeMenu();
+  }
+};
 </script>
 
 </body>
