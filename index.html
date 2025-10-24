@@ -1,221 +1,288 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ghoul Swap — Gifts & Coffee</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Poppins', sans-serif;
-      background: url('https://res.cloudinary.com/eventmobi/image/upload/v1761237992/_James%20Assets/.test%20app%20assets/Abstract%20Backgrounds/Haunted%20Background/2151153754.jpg') no-repeat center center fixed;
-      background-size: cover;
-      color: white;
-      overflow-x: hidden;
-    }
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Ghoul Swap — Gifts & Coffee</title>
 
-    h1 {
-      text-align: center;
-      margin-top: 50px;
-      color: #ffbdbd;
-      text-shadow: 0 0 10px #ff4b4b;
-    }
+<!-- SheetJS for Excel export -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 
-    p {
-      text-align: center;
-      color: #eee;
-      margin-bottom: 30px;
-    }
+<style>
+  :root{
+    --ghost-bg: rgba(0,0,0,0.86);
+    --accent: #ff3b3b;
+    --muted: #cfcfcf;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    background: url('https://res.cloudinary.com/eventmobi/image/upload/v1761237992/_James%20Assets/.test%20app%20assets/Abstract%20Backgrounds/Haunted%20Background/2151153754.jpg') center/cover fixed no-repeat;
+    color:#fff;
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    min-height:100vh;
+    padding:28px;
+  }
 
-    .container {
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      gap: 30px;
-      flex-wrap: wrap;
-      padding: 20px;
-      transition: filter 0.4s ease;
-    }
+  /* Header/title */
+  header { text-align:center; margin-bottom:18px; }
+  header h1{ margin:0; font-size:28px; color:#ffd6d6; text-shadow:0 6px 26px rgba(0,0,0,0.6);}
+  header p{ margin:8px 0 0; color:var(--muted); }
 
-    .form-box {
-      background: rgba(0, 0, 0, 0.8);
-      padding: 25px;
-      border-radius: 15px;
-      width: 380px;
-      box-shadow: 0 0 15px rgba(255, 0, 0, 0.3);
-    }
+  /* Two-column layout */
+  .two-up {
+    display:flex;
+    gap:24px;
+    justify-content:center;
+    align-items:flex-start;
+    flex-wrap:wrap;
+    max-width:1200px;
+    margin: 0 auto;
+  }
 
-    label {
-      display: block;
-      font-size: 12pt;
-      color: white;
-      margin-bottom: 5px;
-    }
+  .box {
+    background: var(--ghost-bg);
+    padding:22px;
+    border-radius:12px;
+    width:420px;
+    min-width:300px;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.6);
+    border:1px solid rgba(255,255,255,0.03);
+  }
 
-    input, textarea {
-      width: 95%;
-      padding: 10px;
-      margin-bottom: 15px;
-      border-radius: 8px;
-      border: none;
-      background: rgba(255,255,255,0.7);
-      color: black;
-      font-size: 14px;
-    }
+  .box h2{ margin:0 0 8px; font-size:18px; }
+  .box p.lead{ margin:6px 0 12px; color:var(--muted); font-size:13px; }
 
-    textarea {
-      resize: none;
-      height: 90px;
-    }
+  label{ display:block; text-align:left; margin:10px 0 6px; font-size:13px; color:#fff; }
+  input, textarea{
+    width:95%;
+    padding:10px 12px;
+    border-radius:8px;
+    border: none;
+    background: rgba(255,255,255,0.85);
+    color:#111;
+    font-size:14px;
+    transition: box-shadow .18s ease, background .18s ease, transform .08s;
+  }
+  input::placeholder, textarea::placeholder { color: rgba(0,0,0,0.45); }
+  input:focus, textarea:focus{
+    background:#fff; box-shadow: 0 0 18px rgba(255,120,0,0.25); transform: translateY(-1px); outline:none;
+  }
+  textarea{ min-height:84px; resize:vertical; }
 
-    input:focus, textarea:focus {
-      outline: none;
-      background: rgba(255,255,255,0.9);
-    }
+  .muted{ color:var(--muted); font-size:13px; }
 
-    .submit-btn {
-      display: block;
-      margin: 40px auto;
-      padding: 15px 40px;
-      background: linear-gradient(90deg, #ff0000, #ff6600);
-      border: none;
-      border-radius: 50px;
-      color: white;
-      font-size: 16px;
-      cursor: pointer;
-      box-shadow: 0 0 20px rgba(255,0,0,0.5);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      animation: pulse 2s infinite;
-    }
+  /* See Menu button inline next to coffee box content */
+  .see-menu { display:inline-block; margin-top:8px; padding:8px 12px; background:#333; color:#fff; border-radius:8px; border:none; cursor:pointer; }
+  .see-menu:hover{ filter:brightness(1.12); }
 
-    .submit-btn:hover {
-      transform: scale(1.05);
-      box-shadow: 0 0 25px rgba(255,120,0,0.8);
-    }
+  /* Final submit (fixed bottom-right) */
+  .submit-wrap{ position:fixed; right:28px; bottom:28px; z-index:120; }
+  .submit-btn{
+    background: linear-gradient(45deg, #a60b0b, #ff3b3b);
+    color:#fff; border:none; padding:14px 18px; border-radius:28px;
+    font-weight:700; font-size:15px; cursor:pointer;
+    box-shadow: 0 6px 30px rgba(255,60,60,0.35);
+    transition: transform .12s ease, box-shadow .12s ease;
+    animation: ghostPulse 2.2s infinite;
+  }
+  .submit-btn:hover{
+    transform: scale(1.06);
+    box-shadow: 0 12px 50px rgba(255,100,50,0.6);
+  }
+  @keyframes ghostPulse {
+    0%{ box-shadow: 0 6px 30px rgba(255,60,60,0.28); }
+    50%{ box-shadow: 0 12px 50px rgba(255,120,50,0.6); }
+    100%{ box-shadow: 0 6px 30px rgba(255,60,60,0.28); }
+  }
 
-    @keyframes pulse {
-      0%, 100% { box-shadow: 0 0 20px rgba(255,0,0,0.5); }
-      50% { box-shadow: 0 0 30px rgba(255,140,0,1); }
-    }
+  /* ---------------------- See Menu centered slide-up popup ---------------------- */
+  .menu-overlay {
+    position:fixed; inset:0; background: rgba(0,0,0,0.6); display:none; z-index:200;
+    align-items:center; justify-content:center;
+  }
+  .menu-overlay.show{ display:flex; }
 
-    /* Admin button */
-    #adminBtn {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      background: rgba(255,255,255,0.3);
-      border: none;
-      color: white;
-      padding: 6px 12px;
-      border-radius: 6px;
-      cursor: pointer;
-    }
+  .menu-modal {
+    width:70vw; max-width:920px; height:80vh; max-height:820px;
+    background:#0f0f10; color:#fff; border-radius:12px; padding:18px;
+    transform: translateY(120%); transition: transform .45s cubic-bezier(.2,.95,.18,1);
+    box-shadow: 0 18px 60px rgba(0,0,0,0.7);
+    display:flex; flex-direction:column; overflow:hidden;
+  }
+  .menu-modal.show{ transform: translateY(0%); }
 
-    /* Overlay for admin panel */
-    #overlay {
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0,0,0,0.7);
-      display: none;
-      justify-content: center;
-      align-items: flex-start;
-      overflow: hidden;
-      z-index: 10;
-    }
+  .menu-modal header { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:12px; }
+  .menu-modal header h3{ margin:0; font-size:18px; color:#ffdca8; }
+  .menu-modal header button{ background:transparent; border:1px solid rgba(255,255,255,0.08); color:#fff; padding:6px 10px; border-radius:8px; cursor:pointer; }
+  .menu-body { overflow:auto; padding-right:8px; }
 
-    /* Admin panel */
-    #adminPanel {
-      background: white;
-      color: black;
-      width: 90%;
-      max-width: 900px;
-      margin: 0 auto;
-      border-radius: 10px;
-      padding: 20px;
-      transform: translateY(-100%);
-      transition: transform 0.5s ease;
-      box-shadow: 0 5px 25px rgba(0,0,0,0.4);
-    }
+  .menu-category { margin:12px 0; }
+  .menu-item { display:flex; gap:12px; align-items:flex-start; padding:10px; border-radius:8px; background: rgba(255,255,255,0.02); margin-bottom:10px; }
+  .menu-item .thumb { width:72px; height:72px; background:#666; border-radius:8px; flex-shrink:0; display:flex; align-items:center; justify-content:center; color:#fff; font-size:11px; }
+  .menu-item .info .name { font-weight:700; margin-bottom:6px; }
+  .menu-item .info .desc { color:#d0d0d0; font-size:13px; line-height:1.2; }
 
-    #adminPanel.visible {
-      transform: translateY(50px);
-    }
+  /* ---------------------- Admin slide-from-top panel (dark translucent overlay) ---------------------- */
+  .admin-overlay {
+    position:fixed; inset:0; display:none; z-index:300; align-items:flex-start; justify-content:center;
+    background: rgba(0,0,0,0.45); padding-top:30px;
+  }
+  .admin-overlay.show{ display:flex; }
 
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 15px;
-    }
+  .admin-panel {
+    width: min(1100px, 94%); background:#fff; color:#111; border-radius:10px; padding:18px;
+    transform: translateY(-120%); transition: transform .45s cubic-bezier(.2,.95,.18,1);
+    box-shadow: 0 18px 80px rgba(0,0,0,0.6);
+  }
+  .admin-panel.show{ transform: translateY(6%); }
 
-    th, td {
-      border: 1px solid #ccc;
-      padding: 10px;
-      font-size: 14px;
-      text-align: left;
-    }
+  table{ width:100%; border-collapse:collapse; margin-top:12px; font-size:13px; }
+  th, td{ border:1px solid #ddd; padding:8px; text-align:left; color:#111; }
+  th{ background:#f3f3f3; }
 
-    th {
-      background: #eee;
-    }
+  .admin-actions { display:flex; gap:10px; justify-content:flex-end; margin-top:12px; }
+  .admin-actions button{ padding:10px 14px; border-radius:8px; border:none; cursor:pointer; }
+  .btn-export{ background:#2f9e44; color:#fff; }
+  .btn-clear{ background:#d9534f; color:#fff; }
+  .btn-close{ background:#6c757d; color:#fff; }
 
-    .admin-buttons {
-      margin-top: 15px;
-      display: flex;
-      justify-content: flex-end;
-      gap: 10px;
-    }
-
-    .admin-buttons button {
-      padding: 10px 15px;
-      border: none;
-      cursor: pointer;
-      border-radius: 6px;
-    }
-
-    .export-btn { background: #4CAF50; color: white; }
-    .clear-btn { background: #f44336; color: white; }
-    .back-btn { background: #555; color: white; }
-
-  </style>
+  /* responsive */
+  @media (max-width:980px){
+    .menu-modal{ width:92vw; height:86vh; }
+    .box{ width:92%; }
+  }
+</style>
 </head>
 <body>
 
-  <button id="adminBtn">Admin</button>
+  <header>
+    <h1>Ghoul Swap — Gifts & Coffee</h1>
+    <p class="muted">Enter your details to join the exchange. Only those who submit here will receive a gift in return.</p>
+  </header>
 
-  <h1>🎃 Ghoul Swap — Gifts & Coffee</h1>
-  <p>Step into the mist and make your offering... Submit your Ghoul Swap entry and coffee order below. ☕<br>Only those who dare to submit will receive a mysterious gift in return.</p>
+  <main class="two-up" role="main" aria-label="Forms">
+    <!-- Gift form -->
+    <section class="box" aria-labelledby="gift-heading">
+      <h2 id="gift-heading">🎃 Ghoul Swap Gift Entry</h2>
+      <p class="lead muted">Provide your real name (optional), code name and gender (required) plus three wishes.</p>
 
-  <div class="container" id="mainContainer">
-    <div class="form-box">
-      <h3>🕸️ Ghoul Swap Gift Entry</h3>
-      <label>Real Name</label>
-      <input type="text" id="realName">
-      <label>Code Name (*required)</label>
-      <input type="text" id="codeName" required>
-      <label>Gender (*required)</label>
-      <input type="text" id="gender" required>
-      <label>Wish Item 1</label>
-      <input type="text" id="wish1">
-      <label>Wish Item 2</label>
-      <input type="text" id="wish2">
-      <label>Wish Item 3</label>
-      <input type="text" id="wish3">
-    </div>
+      <label for="realName">Real Name</label>
+      <input id="realName" type="text" placeholder="e.g. Maria Cruz">
 
-    <div class="form-box">
-      <h3>☕ Coffee Order Form</h3>
-      <label>Starbucks Coffee Order</label>
-      <textarea id="coffeeOrder" placeholder="e.g. Iced Caramel Macchiato, Tall, with less ice"></textarea>
+      <label for="codeName">Code Name <span class="muted">(required)</span></label>
+      <input id="codeName" type="text" placeholder="e.g. NightWatcher">
+
+      <label for="gender">Gender <span class="muted">(required)</span></label>
+      <input id="gender" type="text" placeholder="e.g. Female">
+
+      <label for="wish1">Wish Item 1</label>
+      <input id="wish1" type="text" placeholder="Description or store link">
+
+      <label for="wish2">Wish Item 2</label>
+      <input id="wish2" type="text" placeholder="Description or store link">
+
+      <label for="wish3">Wish Item 3</label>
+      <input id="wish3" type="text" placeholder="Description or store link">
+    </section>
+
+    <!-- Coffee form -->
+    <aside class="box" aria-labelledby="coffee-heading">
+      <h2 id="coffee-heading">☕ Coffee Order Form</h2>
+      <p class="lead muted">Write your Starbucks order (optional) — click "See Menu" for ideas.</p>
+
+      <label for="coffeeOrder">Starbucks Coffee Order</label>
+      <textarea id="coffeeOrder" placeholder="e.g. Iced Caramel Macchiato, Tall, less ice"></textarea>
+
+      <button class="see-menu" id="openMenuBtn" aria-haspopup="dialog">See Menu</button>
+    </aside>
+  </main>
+
+  <!-- Submit button fixed bottom-right -->
+  <div class="submit-wrap" role="region" aria-label="Submit">
+    <button class="submit-btn" id="submitBtn">Submit Swap Gift Entry and Coffee Order</button>
+  </div>
+
+  <!-- See Menu centered slide-up popup (dark overlay + centered modal) -->
+  <div class="menu-overlay" id="menuOverlay" aria-hidden="true">
+    <div class="menu-modal" id="menuModal" role="dialog" aria-modal="true" aria-label="Starbucks Menu">
+      <header>
+        <h3>Starbucks Menu — Inspiration</h3>
+        <button onclick="closeMenu()">Close</button>
+      </header>
+      <div class="menu-body">
+        <!-- categories with placeholder gray images -->
+        <div class="menu-category">
+          <h4 style="color:#ffdca8; margin:6px 0;">Espresso & Lattes</h4>
+          <div class="menu-item">
+            <div class="thumb">IMG</div>
+            <div class="info">
+              <div class="name">Caffè Latte</div>
+              <div class="desc">Smooth espresso with steamed milk — a classic choice.</div>
+            </div>
+          </div>
+
+          <div class="menu-item">
+            <div class="thumb">IMG</div>
+            <div class="info">
+              <div class="name">Flat White</div>
+              <div class="desc">Velvety microfoam and rich ristretto shots.</div>
+            </div>
+          </div>
+
+          <div class="menu-item">
+            <div class="thumb">IMG</div>
+            <div class="info">
+              <div class="name">Americano</div>
+              <div class="desc">Hot water and espresso — bold and familiar.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="menu-category">
+          <h4 style="color:#ffdca8; margin:6px 0;">Iced & Cold Brews</h4>
+          <div class="menu-item">
+            <div class="thumb">IMG</div>
+            <div class="info">
+              <div class="name">Cold Brew</div>
+              <div class="desc">Slow-steeped coffee with smooth, low-acidity flavor.</div>
+            </div>
+          </div>
+
+          <div class="menu-item">
+            <div class="thumb">IMG</div>
+            <div class="info">
+              <div class="name">Iced Caramel Macchiato</div>
+              <div class="desc">Vanilla syrup, milk, espresso, and caramel drizzle.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="menu-category">
+          <h4 style="color:#ffdca8; margin:6px 0;">Tea & Others</h4>
+          <div class="menu-item">
+            <div class="thumb">IMG</div>
+            <div class="info">
+              <div class="name">Matcha Latte</div>
+              <div class="desc">Ceremonial-grade matcha whisked with milk.</div>
+            </div>
+          </div>
+        </div>
+
+        <div style="height:20px;"></div>
+      </div>
     </div>
   </div>
 
-  <button class="submit-btn" id="submitAll">Submit Swap Gift Entry and Coffee Order</button>
-
-  <!-- Overlay + Admin Panel -->
-  <div id="overlay">
-    <div id="adminPanel">
+  <!-- Admin overlay + panel sliding from top -->
+  <div class="admin-overlay" id="adminOverlay" aria-hidden="true">
+    <div class="admin-panel" id="adminPanel" role="dialog" aria-modal="true" aria-label="Admin Panel">
       <h2>Admin Panel — Entries</h2>
-      <table id="entriesTable">
+      <p class="muted">Clean view. Export or clear. Click Back to return to the main form.</p>
+
+      <table id="entriesTable" aria-live="polite">
         <thead>
           <tr>
             <th>Real Name</th>
@@ -225,119 +292,198 @@
             <th>Wish 2</th>
             <th>Wish 3</th>
             <th>Coffee Order</th>
-            <th>Date & Time</th>
+            <th>Submitted At</th>
           </tr>
         </thead>
         <tbody></tbody>
       </table>
-      <div class="admin-buttons">
-        <button class="export-btn" id="exportExcel">Export Entries (Excel)</button>
-        <button class="clear-btn" id="clearEntries">Clear All Entries</button>
-        <button class="back-btn" id="backMain">Back to Main Page</button>
+
+      <div class="admin-actions">
+        <button class="btn-export" id="exportBtn">Export Entries (Excel)</button>
+        <button class="btn-clear" id="clearBtn">Clear All Entries</button>
+        <button class="btn-close" id="adminBack">Back to Main Page</button>
       </div>
     </div>
   </div>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-  <script>
-    const submitBtn = document.getElementById("submitAll");
-    const overlay = document.getElementById("overlay");
-    const adminPanel = document.getElementById("adminPanel");
-    const adminBtn = document.getElementById("adminBtn");
-    const backMain = document.getElementById("backMain");
-    const exportExcel = document.getElementById("exportExcel");
-    const clearEntries = document.getElementById("clearEntries");
-    const tableBody = document.querySelector("#entriesTable tbody");
+<script>
+  // localStorage key
+  const STORAGE_KEY = 'ghoulEntries_v1';
 
-    // Save form data
-    submitBtn.addEventListener("click", () => {
-      const entry = {
-        realName: document.getElementById("realName").value,
-        codeName: document.getElementById("codeName").value,
-        gender: document.getElementById("gender").value,
-        wish1: document.getElementById("wish1").value,
-        wish2: document.getElementById("wish2").value,
-        wish3: document.getElementById("wish3").value,
-        coffeeOrder: document.getElementById("coffeeOrder").value,
-        date: new Date().toLocaleString()
-      };
+  // Elements
+  const openMenuBtn = document.getElementById('openMenuBtn');
+  const menuOverlay = document.getElementById('menuOverlay');
+  const menuModal = document.getElementById('menuModal');
+  const submitBtn = document.getElementById('submitBtn');
+  const adminBtn = document.getElementById('adminBtn');
+  const adminOverlay = document.getElementById('adminOverlay');
+  const adminPanel = document.getElementById('adminPanel');
+  const adminBack = document.getElementById('adminBack');
+  const exportBtn = document.getElementById('exportBtn');
+  const clearBtn = document.getElementById('clearBtn');
+  const entriesTbody = document.querySelector('#entriesTable tbody');
 
-      if (!entry.codeName || !entry.gender) {
-        alert("Please fill out the required fields (Code Name and Gender).");
-        return;
-      }
+  // OPEN/CLOSE See Menu (centered slide-up)
+  document.getElementById('openMenuBtn').addEventListener('click', openMenu);
+  function openMenu(){
+    menuOverlay.classList.add('show');
+    menuModal.classList.add('show');
+    // disable page scroll while open
+    document.body.style.overflow = 'hidden';
+  }
+  function closeMenu(){
+    menuModal.classList.remove('show');
+    menuOverlay.classList.remove('show');
+    document.body.style.overflow = 'auto';
+  }
+  // clicking overlay closes
+  menuOverlay.addEventListener('click', function(e){
+    if(e.target === menuOverlay) closeMenu();
+  });
 
-      let entries = JSON.parse(localStorage.getItem("ghoulEntries")) || [];
-      entries.push(entry);
-      localStorage.setItem("ghoulEntries", JSON.stringify(entries));
+  // SUBMIT: validate required fields, save entry, show styled confirmation
+  submitBtn.addEventListener('click', submitEntry);
+  function submitEntry(){
+    const realName = document.getElementById('realName').value.trim();
+    const codeName = document.getElementById('codeName').value.trim();
+    const gender = document.getElementById('gender').value.trim();
+    const wish1 = document.getElementById('wish1').value.trim();
+    const wish2 = document.getElementById('wish2').value.trim();
+    const wish3 = document.getElementById('wish3').value.trim();
+    const coffeeOrder = document.getElementById('coffeeOrder').value.trim();
 
-      alert("Your entry has been saved! The spirits thank you 👻");
-
-      document.querySelectorAll("input, textarea").forEach(e => e.value = "");
-    });
-
-    // Admin Login
-    adminBtn.addEventListener("click", () => {
-      const password = prompt("Enter Admin Password:");
-      if (password === "escape2025") {
-        populateTable();
-        overlay.style.display = "flex";
-        setTimeout(() => adminPanel.classList.add("visible"), 50);
-        document.body.style.overflow = "hidden";
-      } else {
-        alert("Incorrect password!");
-      }
-    });
-
-    // Back to main page
-    backMain.addEventListener("click", () => {
-      adminPanel.classList.remove("visible");
-      setTimeout(() => {
-        overlay.style.display = "none";
-        document.body.style.overflow = "auto";
-      }, 500);
-    });
-
-    // Populate admin table
-    function populateTable() {
-      const entries = JSON.parse(localStorage.getItem("ghoulEntries")) || [];
-      tableBody.innerHTML = "";
-      entries.forEach(entry => {
-        const row = document.createElement("tr");
-        row.innerHTML = `
-          <td>${entry.realName || ""}</td>
-          <td>${entry.codeName}</td>
-          <td>${entry.gender}</td>
-          <td>${entry.wish1 || ""}</td>
-          <td>${entry.wish2 || ""}</td>
-          <td>${entry.wish3 || ""}</td>
-          <td>${entry.coffeeOrder || ""}</td>
-          <td>${entry.date}</td>
-        `;
-        tableBody.appendChild(row);
-      });
+    if(!codeName || !gender){
+      showAlert('Please fill required fields: Code Name and Gender.', true);
+      return;
     }
 
-    // Export to Excel
-    exportExcel.addEventListener("click", () => {
-      const entries = JSON.parse(localStorage.getItem("ghoulEntries")) || [];
-      if (entries.length === 0) {
-        alert("No entries to export!");
-        return;
-      }
-      const ws = XLSX.utils.json_to_sheet(entries);
-      const wb = XLSX.utils.book_new();
-      XLSX.utils.book_append_sheet(wb, ws, "Entries");
-      XLSX.writeFile(wb, "entries.xlsx");
-    });
+    const entry = {
+      realName, codeName, gender, wish1, wish2, wish3, coffeeOrder,
+      submittedAt: new Date().toLocaleString()
+    };
 
-    // Clear all
-    clearEntries.addEventListener("click", () => {
-      if (confirm("Are you sure you want to clear all entries?")) {
-        localStorage.removeItem("ghoulEntries");
-        populateTable();
-      }
+    const entries = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+    entries.push(entry);
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(entries));
+
+    // clear form
+    document.querySelectorAll('#realName,#codeName,#gender,#wish1,#wish2,#wish3,#coffeeOrder').forEach(i=>i.value='');
+
+    showAlert('Your entry has been saved! The spirits thank you 👻');
+  }
+
+  // Styled alert (spooky popup)
+  function showAlert(message, isError){
+    const dialog = document.createElement('div');
+    dialog.style.position='fixed';
+    dialog.style.left='50%'; dialog.style.top='18%';
+    dialog.style.transform='translateX(-50%)';
+    dialog.style.background= isError? '#b33':'#0b0b0b';
+    dialog.style.color='#fff';
+    dialog.style.padding='14px 18px';
+    dialog.style.borderRadius='10px';
+    dialog.style.boxShadow='0 8px 40px rgba(0,0,0,0.6)';
+    dialog.style.zIndex=9999;
+    dialog.style.fontWeight=600;
+    dialog.style.textAlign='center';
+    dialog.innerText = message;
+    document.body.appendChild(dialog);
+    setTimeout(()=> {
+      dialog.style.transition='opacity .45s ease, transform .45s ease';
+      dialog.style.opacity='0';
+      dialog.style.transform = 'translateX(-50%) translateY(-20px)';
+    }, 1700);
+    setTimeout(()=> document.body.removeChild(dialog), 2200);
+  }
+
+  // ADMIN: open slide-down panel from top
+  adminBtn.addEventListener('click', ()=>{
+    const pass = prompt('Enter admin password:');
+    if(pass === 'escape2025'){
+      populateAdminTable();
+      adminOverlay.classList.add('show');
+      adminPanel.classList.add('show');
+      document.body.style.overflow = 'hidden';
+    } else if(pass !== null){
+      alert('Incorrect password.');
+    }
+  });
+
+  // Back to main
+  adminBack.addEventListener('click', ()=>{
+    adminPanel.classList.remove('show');
+    setTimeout(()=>{
+      adminOverlay.classList.remove('show');
+      document.body.style.overflow = 'auto';
+    }, 480);
+  });
+
+  // Close clicking overlay (optional)
+  adminOverlay.addEventListener('click', function(e){
+    if(e.target === adminOverlay){
+      adminPanel.classList.remove('show');
+      setTimeout(()=> adminOverlay.classList.remove('show'), 480);
+      document.body.style.overflow = 'auto';
+    }
+  });
+
+  // Fill admin table from localStorage
+  function populateAdminTable(){
+    const entries = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+    entriesTbody.innerHTML = '';
+    entries.forEach(row => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `<td>${escapeHtml(row.realName||'')}</td>
+                      <td>${escapeHtml(row.codeName||'')}</td>
+                      <td>${escapeHtml(row.gender||'')}</td>
+                      <td>${escapeHtml(row.wish1||'')}</td>
+                      <td>${escapeHtml(row.wish2||'')}</td>
+                      <td>${escapeHtml(row.wish3||'')}</td>
+                      <td>${escapeHtml(row.coffeeOrder||'')}</td>
+                      <td>${escapeHtml(row.submittedAt||'')}</td>`;
+      entriesTbody.appendChild(tr);
     });
-  </script>
+  }
+
+  // Export to Excel using SheetJS
+  exportBtn.addEventListener('click', ()=>{
+    const entries = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+    if(!entries.length){ alert('No entries to export.'); return; }
+    // Map objects to sheet-friendly structure (ensure consistent keys)
+    const data = entries.map(e => ({
+      "Real Name": e.realName || '',
+      "Code Name": e.codeName || '',
+      "Gender": e.gender || '',
+      "Wish Item 1": e.wish1 || '',
+      "Wish Item 2": e.wish2 || '',
+      "Wish Item 3": e.wish3 || '',
+      "Coffee Order": e.coffeeOrder || '',
+      "Submitted At": e.submittedAt || ''
+    }));
+    const ws = XLSX.utils.json_to_sheet(data);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Entries');
+    XLSX.writeFile(wb, 'entries.xlsx');
+  });
+
+  // Clear entries
+  clearBtn.addEventListener('click', ()=>{
+    if(confirm('Are you sure you want to clear ALL entries? This cannot be undone.')){
+      localStorage.removeItem(STORAGE_KEY);
+      populateAdminTable();
+    }
+  });
+
+  // Helper: escape HTML for table
+  function escapeHtml(str){
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#039;');
+  }
+</script>
+
 </body>
 </html>
