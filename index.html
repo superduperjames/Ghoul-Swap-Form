@@ -14,14 +14,6 @@
       overflow-x: hidden;
     }
 
-    .overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.7);
-      display: none;
-      z-index: 100;
-    }
-
     .form-container {
       display: flex;
       flex-wrap: wrap;
@@ -160,45 +152,6 @@
       text-shadow: 0 0 8px rgba(255,0,0,0.8);
     }
 
-    /* Menu Panel */
-    .menu-panel {
-      position: fixed;
-      top: 0;
-      right: 0;
-      width: 90%;
-      max-width: 500px;
-      height: 100%;
-      background-color: rgba(0,0,0,0.95);
-      overflow-y: auto;
-      padding: 20px;
-      box-shadow: -4px 0 15px rgba(0,0,0,0.2);
-      transform: translateX(100%);
-      transition: transform 0.3s ease-in-out;
-      z-index: 1000;
-      border-radius: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .menu-panel.active {
-      transform: translateX(0);
-    }
-
-    .menu-link-container {
-      text-align: center;
-    }
-
-    #menuLink {
-      font-size: 16pt;
-      color: #ff5555;
-      text-decoration: underline;
-    }
-
-    #menuLink:hover {
-      color: #ff9999;
-    }
-
     .see-menu-btn {
       background: #444;
       color: white;
@@ -218,17 +171,10 @@
         flex-direction: column;
         align-items: center;
       }
-      .menu-panel {
-        width: 90%;
-        height: 90%;
-      }
     }
   </style>
 </head>
 <body>
-
-  <!-- Overlay -->
-  <div class="overlay" id="overlay"></div>
 
   <!-- Admin Button -->
   <button class="admin-btn" id="adminBtn">Admin Login</button>
@@ -269,24 +215,16 @@
       <h2>☕ Coffee Order Form</h2>
       <label>Starbucks Coffee Order</label>
       <textarea id="coffeeOrder" placeholder="Enter your drink order here"></textarea>
-      <button class="see-menu-btn" id="seeMenu">See Menu</button>
+      <a href="YOUR_MENU_URL_HERE" target="_blank">
+        <button class="see-menu-btn">See Menu</button>
+      </a>
     </div>
   </div>
 
   <!-- Submit Button -->
   <button class="submit-btn" id="submitBtn">Submit Swap Gift Entry and Coffee Order</button>
 
-  <!-- Menu Panel -->
-  <div class="menu-panel" id="menuPanel">
-    <button class="close-btn" id="closeMenu">Close ✕</button>
-    <div class="menu-link-container">
-      <a href="YOUR_MENU_URL_HERE" target="_blank" id="menuLink">Click here to view the full menu</a>
-    </div>
-  </div>
-
   <script>
-    const overlay = document.getElementById('overlay');
-    const menuPanel = document.getElementById('menuPanel');
     const adminPanel = document.getElementById('adminPanel');
     const adminBtn = document.getElementById('adminBtn');
     const adminLogin = document.getElementById('adminLogin');
@@ -294,36 +232,15 @@
     const submitBtn = document.getElementById('submitBtn');
     const exportBtn = document.getElementById('exportEntries');
     const clearBtn = document.getElementById('clearEntries');
-    const seeMenu = document.getElementById('seeMenu');
-    const closeMenuBtn = document.getElementById('closeMenu');
     const closeAdmin = document.getElementById('closeAdmin');
-
-    // Toggle Menu
-    seeMenu.addEventListener('click', () => {
-      menuPanel.classList.add('active');
-      overlay.style.display = 'block';
-    });
-
-    closeMenuBtn.addEventListener('click', () => {
-      menuPanel.classList.remove('active');
-      overlay.style.display = 'none';
-    });
-
-    overlay.addEventListener('click', () => {
-      menuPanel.classList.remove('active');
-      adminPanel.classList.remove('active');
-      overlay.style.display = 'none';
-    });
 
     // Admin login
     adminBtn.addEventListener('click', () => {
       adminPanel.classList.add('active');
-      overlay.style.display = 'block';
     });
 
     closeAdmin.addEventListener('click', () => {
       adminPanel.classList.remove('active');
-      overlay.style.display = 'none';
     });
 
     adminLogin.addEventListener('click', () => {
