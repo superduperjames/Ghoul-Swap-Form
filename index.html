@@ -1,645 +1,235 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Ghoul Swap — Gifts & Coffee</title>
-<style>
-  :root{
-    --box-bg: rgba(0,0,0,0.85);
-    --accent: #b30000;
-    --muted: #ccc;
-  }
-  html,body{height:100%;margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;}
-  body{
-    background-image: url('https://res.cloudinary.com/eventmobi/image/upload/v1761237992/_James%20Assets/.test%20app%20assets/Abstract%20Backgrounds/Haunted%20Background/2151153754.jpg');
-    background-size: cover;
-    background-position: center;
-    color: #fff;
-    -webkit-font-smoothing:antialiased;
-    -moz-osx-font-smoothing:grayscale;
-    padding: 28px 18px;
-    box-sizing:border-box;
-  }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ghoul Swap — Gifts & Coffee</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap');
 
-  /* page wrapper */
-  .page {
-    max-width:1200px;
-    margin: 0 auto;
-  }
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: url('https://res.cloudinary.com/eventmobi/image/upload/v1761237992/_James%20Assets/.test%20app%20assets/Abstract%20Backgrounds/Haunted%20Background/2151153754.jpg') center/cover no-repeat fixed;
+      margin: 0;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      min-height: 100vh;
+    }
 
-  /* header/title */
-  .title {
-    text-align:center;
-    margin-bottom:18px;
-    text-shadow: 0 2px 12px rgba(0,0,0,0.6);
-  }
-  .title h1{margin:0;font-size:28px;}
-  .title p{margin:6px 0 0;color:var(--muted);font-size:14px;}
+    h1 {
+      margin-top: 40px;
+      font-size: 2rem;
+      text-align: center;
+      text-shadow: 0 0 10px rgba(255, 0, 0, 0.6);
+    }
 
-  /* layout: two boxes side-by-side on desktop */
-  .two-up {
-    display:flex;
-    gap:24px;
-    align-items:flex-start;
-    justify-content:center;
-    flex-wrap:wrap; /* allows stacking on narrow screens */
-  }
+    p.intro {
+      text-align: center;
+      max-width: 600px;
+      margin: 10px auto 30px;
+      font-size: 1rem;
+      color: #f3f3f3;
+    }
 
-  .box {
-    flex: 1 1 420px; /* grow, shrink, basis */
-    min-width:320px;
-    max-width:540px;
-    background: var(--box-bg);
-    padding:20px;
-    border-radius:12px;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.6);
-    border: 1px solid rgba(255,255,255,0.03);
-  }
+    .form-container {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      justify-content: center;
+      width: 90%;
+      max-width: 1100px;
+    }
 
-  .box h2{margin:0 0 8px;font-size:20px;}
-  .box p.lead{margin-top:0;color:var(--muted);font-size:13px;}
+    .form-box {
+      background: rgba(0, 0, 0, 0.8);
+      padding: 25px;
+      border-radius: 16px;
+      box-shadow: 0 0 15px rgba(255, 0, 0, 0.2);
+      flex: 1 1 450px;
+      backdrop-filter: blur(4px);
+    }
 
-  label{display:block;text-align:left;margin:12px 0 6px;font-size:13px;color:#fff;}
-  input[type="text"], textarea, select {
-    width:100%;
-    padding:10px 12px;
-    border-radius:8px;
-    border:1px solid rgba(255,255,255,0.08);
-    background: rgba(255,255,255,0.03);
-    color:#fff;
-    box-sizing:border-box;
-    font-size:14px;
-    outline: none;
-  }
-  input::placeholder, textarea::placeholder { color: rgba(255,255,255,0.5); }
+    .form-box h2 {
+      margin-top: 0;
+      font-size: 1.3rem;
+    }
 
-  textarea{ min-height:88px; resize:vertical; }
+    label {
+      display: block;
+      margin: 10px 0 5px;
+      font-size: 12pt;
+      color: white;
+    }
 
-  .row { display:flex; gap:12px; align-items:center; }
-  .row .flex { flex:1; }
+    input, textarea {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      border: none;
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.85);
+      font-size: 0.95rem;
+      color: #222;
+    }
 
-  .btn {
-    background: var(--accent);
-    border:none;
-    color:#fff;
-    padding:10px 14px;
-    border-radius:8px;
-    cursor:pointer;
-    font-weight:600;
-    transition: transform .08s ease, filter .12s ease;
-  }
-  .btn:hover{ filter:brightness(1.08); transform: translateY(-1px); }
+    textarea {
+      resize: vertical;
+    }
 
-  .btn.secondary {
-    background: #444;
-  }
+    .menu-button {
+      background-color: #444;
+      color: white;
+      border: none;
+      padding: 8px 14px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
 
-  .small { font-size:13px; padding:8px 10px; border-radius:7px; }
+    .menu-button:hover {
+      background-color: #666;
+    }
 
-  /* admin button (discreet) */
-  #adminBtn{
-    position:fixed;
-    top:12px;
-    right:12px;
-    z-index:1200;
-    background: rgba(255,255,255,0.08);
-    border:1px solid rgba(255,255,255,0.12);
-    color:#fff;
-    padding:6px 10px;
-    border-radius:7px;
-    cursor:pointer;
-    backdrop-filter: blur(4px);
-  }
+    /* Slide-in menu panel */
+    .menu-panel {
+      position: fixed;
+      right: -60%;
+      top: 0;
+      width: 60%;
+      height: 100%;
+      background: rgba(15, 15, 15, 0.95);
+      transition: right 0.5s ease;
+      z-index: 2001;
+      overflow-y: auto;
+      padding: 20px;
+    }
 
-  /* admin panel hidden area */
-  #adminPanel{
-    display:none;
-    margin-top:20px;
-  }
-  #adminPanel .controls{ display:flex; gap:10px; margin-bottom:12px; flex-wrap:wrap; }
+    .menu-panel.open {
+      right: 0;
+    }
 
-  table { width:100%; border-collapse:collapse; font-size:13px;}
-  th,td{ padding:8px 6px; border:1px solid rgba(255,255,255,0.06); text-align:left; color:#fff; }
-  th{ background:rgba(255,255,255,0.03); font-weight:600; }
+    .menu-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      z-index: 2000;
+    }
 
-  /* slide-in panel & overlay */
-  .overlay {
-    position:fixed;
-    inset:0;
-    background: rgba(0,0,0,0.0);
-    visibility:hidden;
-    opacity:0;
-    transition: opacity .28s ease, visibility .28s;
-    z-index:1100;
-  }
-  .overlay.show {
-    visibility:visible;
-    opacity:1;
-    background: rgba(0,0,0,0.45); /* dark translucent background behind slide panel */
-  }
+    .menu-overlay.show {
+      display: block;
+    }
 
-  .slide-panel {
-    position: fixed;
-    top:0;
-    right:-100%;
-    height:100%;
-    width:420px;
-    max-width:92%;
-    background: linear-gradient(180deg, rgba(15,15,15,0.98), rgba(10,10,10,0.98));
-    box-shadow: -30px 0 60px rgba(0,0,0,0.6);
-    z-index:1150;
-    transition: right .42s cubic-bezier(.22,.9,.3,1), transform .42s;
-    display:flex;
-    flex-direction:column;
-    padding:18px;
-    overflow:hidden;
-    border-left:1px solid rgba(255,255,255,0.03);
-  }
-  .slide-panel.show { right:0; }
+    .close-menu {
+      background: #ff4444;
+      color: white;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-bottom: 10px;
+    }
 
-  .panel-header { display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:10px; }
-  .panel-header h3 { margin:0; font-size:18px; color:#fff; }
-  .panel-close { background:transparent; border:1px solid rgba(255,255,255,0.06); color:#fff; padding:6px 8px; border-radius:6px; cursor:pointer; }
+    /* Dramatic Final Submit Button */
+    .final-submit {
+      background: linear-gradient(45deg, #8b0000, #ff0000);
+      color: white;
+      font-size: 1.1rem;
+      font-weight: bold;
+      border: none;
+      border-radius: 50px;
+      padding: 15px 35px;
+      margin: 40px auto;
+      cursor: pointer;
+      display: block;
+      transition: all 0.4s ease;
+      box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
+    }
 
-  .menu-list { overflow:auto; padding-right:8px; } /* scrollable area inside panel */
-  .menu-category { margin:12px 0; }
-  .menu-category h4{ margin:6px 0 8px; font-size:15px; color:#ffdca8; }
-  .menu-item {
-    display:flex;
-    gap:10px;
-    align-items:flex-start;
-    padding:8px 6px;
-    border-radius:8px;
-    background: rgba(255,255,255,0.01);
-    margin-bottom:8px;
-  }
-  .menu-item img { width:64px; height:64px; object-fit:cover; border-radius:8px; flex-shrink:0; border:1px solid rgba(255,255,255,0.04);}
-  .menu-item .mi-info { font-size:13px; color:#fff; }
-  .mi-info .name { font-weight:600; margin-bottom:4px; }
-  .mi-info .desc { color: #d0d0d0; font-size:12px; line-height:1.2; }
+    .final-submit:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 30px rgba(255, 0, 0, 0.8);
+      background: linear-gradient(45deg, #ff0000, #8b0000);
+      letter-spacing: 1px;
+    }
 
-  /* responsive tweaks to ensure side-by-side on desktop and wrap on small screens */
-  @media (max-width:980px){
-    .two-up{ gap:18px; }
-    .box{ width:48%; min-width:300px; }
-  }
-  @media (max-width:760px){
-    .two-up{ flex-direction:column; align-items:center; }
-    .box{ width:92%; }
-    .slide-panel{ width:100%; right:-100%; }
-  }
-  /* tiny helper */
-  .muted{ color:var(--muted); font-size:13px; margin-top:6px; }
-</style>
+    @media (max-width: 768px) {
+      .menu-panel {
+        width: 90%;
+      }
+      .form-container {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+  </style>
 </head>
 <body>
-  <button id="adminBtn" title="Admin">Admin</button>
 
-  <div class="page">
-    <div class="title">
-      <h1>Ghoul Swap — Gifts & Coffee</h1>
-      <p class="muted">Enter your details to join the exchange. Only participants who submit here will receive a gift in return.</p>
+  <h1>🎃 Ghoul Swap — Gifts & Coffee</h1>
+  <p class="intro">
+    Step into the mist and make your offering... Submit your Ghoul Swap entry and coffee order below.  
+    👻 Only those who dare to submit will receive a mysterious gift in return.
+  </p>
+
+  <div class="form-container">
+    <!-- Gift Entry Form -->
+    <div class="form-box">
+      <h2>🕸️ Ghoul Swap Gift Entry</h2>
+      <label for="realName">Real Name</label>
+      <input type="text" id="realName" placeholder="e.g. Maria Cruz" />
+
+      <label for="codeName">Code Name (*required)</label>
+      <input type="text" id="codeName" placeholder="e.g. NightWatcher" required />
+
+      <label for="gender">Gender (*required)</label>
+      <input type="text" id="gender" placeholder="e.g. Female" required />
+
+      <label for="wish1">Wish Item 1</label>
+      <input type="text" id="wish1" placeholder="Item description or store link" />
+      <label for="wish2">Wish Item 2</label>
+      <input type="text" id="wish2" placeholder="Item description or store link" />
+      <label for="wish3">Wish Item 3</label>
+      <input type="text" id="wish3" placeholder="Item description or store link" />
     </div>
 
-    <div class="two-up" role="region" aria-label="Forms container">
-
-      <!-- LEFT: Ghoul Swap Gift Form -->
-      <section class="box" aria-labelledby="gift-heading">
-        <h2 id="gift-heading">🎃 Ghoul Swap Gift Entry</h2>
-        <p class="lead muted">Provide your info and three wishes for the exchange.</p>
-
-        <form id="giftForm" autocomplete="off">
-          <label for="realName">Real Name</label>
-          <input id="realName" name="realName" type="text" placeholder="e.g. Maria Cruz">
-
-          <label for="codeName">Code Name <span class="muted" style="font-size:12px">(*required)</span></label>
-          <input id="codeName" name="codeName" type="text" required placeholder="e.g. NightWatcher">
-
-          <label for="gender">Gender <span class="muted" style="font-size:12px">(*required)</span></label>
-          <input id="gender" name="gender" type="text" required placeholder="e.g. Female">
-
-          <label for="wish1">Wish Item 1</label>
-          <input id="wish1" name="wish1" type="text" placeholder="Item description or store link">
-
-          <label for="wish2">Wish Item 2</label>
-          <input id="wish2" name="wish2" type="text" placeholder="Item description or store link">
-
-          <label for="wish3">Wish Item 3</label>
-          <input id="wish3" name="wish3" type="text" placeholder="Item description or store link">
-
-          <div style="display:flex;gap:10px; margin-top:6px;">
-            <button class="btn" type="submit">Submit Gift Entry</button>
-            <button class="btn secondary" type="button" id="saveLocBtn">Save Locally</button>
-          </div>
-
-          <p class="muted" style="margin-top:10px;">Tip: If you plan to add a coffee order, submit this gift entry first so the coffee order can link to it.</p>
-        </form>
-      </section>
-
-      <!-- RIGHT: Coffee Order Form -->
-      <aside class="box" aria-labelledby="coffee-heading">
-        <h2 id="coffee-heading">☕ Coffee Order Form</h2>
-        <p class="lead muted">Write your coffee order and click "See Menu" for ideas.</p>
-
-        <form id="coffeeForm" autocomplete="off">
-          <label for="coffeeText">Starbucks Coffee Order</label>
-          <div style="display:flex; gap:8px; align-items:flex-start;">
-            <textarea id="coffeeText" name="coffeeText" placeholder="e.g. Iced Caramel Macchiato, Tall, with less ice"></textarea>
-            <div style="display:flex;flex-direction:column;gap:8px;">
-              <button class="btn secondary small" id="openMenuBtn" type="button">See Menu</button>
-            </div>
-          </div>
-
-          <div style="display:flex;gap:10px;margin-top:10px;">
-            <button class="btn" type="submit">Submit Coffee Order</button>
-            <button class="btn secondary" id="attachLatestBtn" type="button">Attach to Latest</button>
-          </div>
-
-          <p class="muted" style="margin-top:10px;">If you already submitted a gift entry, the coffee order will attach to your most recent entry. Otherwise, submit a gift entry first.</p>
-        </form>
-      </aside>
-
-    </div> <!-- end two-up -->
-
-    <!-- Admin Panel (hidden until login) -->
-    <section id="adminPanel" class="box" aria-hidden="true" style="margin-top:22px;">
-      <h2>🗝️ Admin Panel</h2>
-      <div class="controls">
-        <button class="btn" id="downloadBtn" type="button">Download Entries (CSV)</button>
-        <button class="btn secondary" id="clearBtn" type="button">Clear All Entries</button>
-      </div>
-
-      <div style="max-height:400px; overflow:auto;">
-        <table id="entriesTable" aria-live="polite">
-          <thead>
-            <tr>
-              <th>Real Name</th><th>Code Name</th><th>Gender</th><th>Wish 1</th><th>Wish 2</th><th>Wish 3</th><th>Coffee</th>
-            </tr>
-          </thead>
-          <tbody></tbody>
-        </table>
-      </div>
-    </section>
-
-  </div> <!-- end page -->
-
-  <!-- Slide-in menu overlay + panel -->
-  <div id="overlay" class="overlay" aria-hidden="true"></div>
-
-  <aside id="slidePanel" class="slide-panel" role="dialog" aria-modal="true" aria-label="Starbucks mini menu">
-    <div class="panel-header">
-      <h3>Starbucks — Mini Menu</h3>
-      <button class="panel-close" id="closePanelBtn" aria-label="Close menu">✕</button>
+    <!-- Coffee Order Form -->
+    <div class="form-box">
+      <h2>☕ Coffee Order Form</h2>
+      <label for="coffeeOrder">Starbucks Coffee Order</label>
+      <textarea id="coffeeOrder" rows="5" placeholder="e.g. Iced Caramel Macchiato, Tall, with less ice"></textarea>
+      <button class="menu-button" onclick="openMenu()">See Menu</button>
     </div>
+  </div>
 
-    <div class="menu-list" id="menuList">
-      <!-- Detailed categories with placeholder images.
-           Replace the `src` values (https://via.placeholder.com/64) with your own drink photos later.
-      -->
+  <!-- Final Submit -->
+  <button class="final-submit">Submit Swap Gift Entry and Coffee Order</button>
 
-      <div class="menu-category">
-        <h4>Espresso & Lattes</h4>
-        <div class="menu-item">
-          <img src="https://via.placeholder.com/64?text=Esp1" alt="Espresso photo" data-src-editable>
-          <div class="mi-info">
-            <div class="name">Caffè Latte</div>
-            <div class="desc">Smooth espresso with steamed milk — classic and comforting.</div>
-          </div>
-        </div>
+  <!-- Slide-in Menu Panel -->
+  <div class="menu-overlay" id="menuOverlay" onclick="closeMenu()"></div>
+  <div class="menu-panel" id="menuPanel">
+    <button class="close-menu" onclick="closeMenu()">Close Menu</button>
+    <h3 style="color:white;">Starbucks Coffee Menu</h3>
+    <p style="color:#ccc;">Browse the menu below for inspiration. 🍂</p>
+    <iframe src="https://superduperjames.github.io/starbucks-menu/" 
+      width="100%" height="600px" style="border:none; border-radius:8px;"></iframe>
+  </div>
 
-        <div class="menu-item">
-          <img src="https://via.placeholder.com/64?text=Esp2" alt="Flat White photo" data-src-editable>
-          <div class="mi-info">
-            <div class="name">Flat White</div>
-            <div class="desc">Velvety microfoam with a rich espresso finish.</div>
-          </div>
-        </div>
-
-        <div class="menu-item">
-          <img src="https://via.placeholder.com/64?text=Esp3" alt="Americano photo" data-src-editable>
-          <div class="mi-info">
-            <div class="name">Americano</div>
-            <div class="desc">Espresso shots with hot water — bold and smooth.</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="menu-category">
-        <h4>Iced Coffees & Cold Brews</h4>
-        <div class="menu-item">
-          <img src="https://via.placeholder.com/64?text=CB1" alt="Cold Brew photo" data-src-editable>
-          <div class="mi-info">
-            <div class="name">Cold Brew</div>
-            <div class="desc">Slow-steeped for a naturally sweet, low-acidity cup.</div>
-          </div>
-        </div>
-
-        <div class="menu-item">
-          <img src="https://via.placeholder.com/64?text=IC1" alt="Iced Latte photo" data-src-editable>
-          <div class="mi-info">
-            <div class="name">Iced Latte</div>
-            <div class="desc">Espresso poured over ice with milk — refreshing.</div>
-          </div>
-        </div>
-
-        <div class="menu-item">
-          <img src="https://via.placeholder.com/64?text=IC2" alt="Iced Caramel Macchiato" data-src-editable>
-          <div class="mi-info">
-            <div class="name">Iced Caramel Macchiato</div>
-            <div class="desc">Vanilla syrup, milk, ice, espresso, caramel drizzle.</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="menu-category">
-        <h4>Frappuccino® Blended Beverages</h4>
-        <div class="menu-item">
-          <img src="https://via.placeholder.com/64?text=F1" alt="Mocha Frappuccino" data-src-editable>
-          <div class="mi-info">
-            <div class="name">Mocha Frappuccino®</div>
-            <div class="desc">Espresso, milk, mocha sauce, blended with ice.</div>
-          </div>
-        </div>
-
-        <div class="menu-item">
-          <img src="https://via.placeholder.com/64?text=F2" alt="Caramel Frappuccino" data-src-editable>
-          <div class="mi-info">
-            <div class="name">Caramel Frappuccino®</div>
-            <div class="desc">Caramel syrup, milk, ice, espresso — topped with whipped cream.</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="menu-category">
-        <h4>Tea & Tea Lattes</h4>
-        <div class="menu-item">
-          <img src="https://via.placeholder.com/64?text=T1" alt="Chai Latte" data-src-editable>
-          <div class="mi-info">
-            <div class="name">Chai Tea Latte</div>
-            <div class="desc">Chai spices blended with steamed milk — aromatic and cozy.</div>
-          </div>
-        </div>
-
-        <div class="menu-item">
-          <img src="https://via.placeholder.com/64?text=T2" alt="Matcha Latte" data-src-editable>
-          <div class="mi-info">
-            <div class="name">Matcha Latte</div>
-            <div class="desc">Ceremonial-grade matcha whisked with steamed milk.</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="menu-category">
-        <h4>Refreshers & Cold Drinks</h4>
-        <div class="menu-item">
-          <img src="https://via.placeholder.com/64?text=R1" alt="Strawberry Refresher" data-src-editable>
-          <div class="mi-info">
-            <div class="name">Strawberry Acai Refresher</div>
-            <div class="desc">Light, fruity, and served over ice — great for warm days.</div>
-          </div>
-        </div>
-
-        <div class="menu-item">
-          <img src="https://via.placeholder.com/64?text=R2" alt="Iced Tea" data-src-editable>
-          <div class="mi-info">
-            <div class="name">Iced Tea</div>
-            <div class="desc">Brewed tea served chilled — customizable.</div>
-          </div>
-        </div>
-      </div>
-
-      <div style="height:48px;"></div>
-    </div> <!-- end menu-list -->
-  </aside>
-
-<script>
-/* ---------- Data handling ---------- */
-const STORAGE_KEY = 'ghoulGiftEntries_v1';
-
-function readEntries() {
-  return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
-}
-function writeEntries(entries) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(entries));
-}
-
-/* ---------- Gift form behavior ---------- */
-const giftForm = document.getElementById('giftForm');
-giftForm.addEventListener('submit', (e)=>{
-  e.preventDefault();
-  const realName = (giftForm.realName.value||'').trim();
-  const codeName = (giftForm.codeName.value||'').trim();
-  const gender = (giftForm.gender.value||'').trim();
-  const wish1 = (giftForm.wish1.value||'').trim();
-  const wish2 = (giftForm.wish2.value||'').trim();
-  const wish3 = (giftForm.wish3.value||'').trim();
-
-  if(!codeName || !gender){
-    alert('Please fill Code Name and Gender (required).');
-    return;
-  }
-
-  const entry = { realName, codeName, gender, wish1, wish2, wish3, coffee: '' , created: new Date().toISOString() };
-  const entries = readEntries();
-  entries.push(entry);
-  writeEntries(entries);
-  alert('Gift entry saved locally.');
-  giftForm.reset();
-});
-
-/* optional "Save Locally" button for convenience */
-document.getElementById('saveLocBtn').addEventListener('click', ()=>{
-  // trigger same validation but without clearing
-  const codeName = (giftForm.codeName.value||'').trim();
-  const gender = (giftForm.gender.value||'').trim();
-  if(!codeName || !gender){ alert('Please fill Code Name and Gender (required).'); return; }
-  const entries = readEntries();
-  const entry = {
-    realName: (giftForm.realName.value||'').trim(),
-    codeName,
-    gender,
-    wish1: (giftForm.wish1.value||'').trim(),
-    wish2: (giftForm.wish2.value||'').trim(),
-    wish3: (giftForm.wish3.value||'').trim(),
-    coffee: '',
-    created: new Date().toISOString()
-  };
-  entries.push(entry);
-  writeEntries(entries);
-  alert('Saved locally.');
-  giftForm.reset();
-});
-
-/* ---------- Coffee form behavior ---------- */
-const coffeeForm = document.getElementById('coffeeForm');
-coffeeForm.addEventListener('submit', (e)=>{
-  e.preventDefault();
-  attachCoffeeToLatest();
-});
-document.getElementById('attachLatestBtn').addEventListener('click', attachCoffeeToLatest);
-
-function attachCoffeeToLatest(){
-  const coffeeText = (document.getElementById('coffeeText').value||'').trim();
-  if(!coffeeText){ alert('Please type your coffee order first.'); return; }
-  let entries = readEntries();
-  if(!entries.length){
-    alert('No existing gift entries found. Please submit the Ghoul Swap Gift form first so the coffee order can attach to it.');
-    return;
-  }
-  // Attach to latest entry (last in array)
-  entries[entries.length-1].coffee = coffeeText;
-  writeEntries(entries);
-  alert('Coffee order attached to the latest gift entry.');
-  coffeeForm.reset();
-}
-
-/* ---------- Slide-in panel control + overlay ---------- */
-const overlay = document.getElementById('overlay');
-const slidePanel = document.getElementById('slidePanel');
-const openMenuBtn = document.getElementById('openMenuBtn') || document.getElementById('openMenuBtn'); // safe fallback
-const closePanelBtn = document.getElementById('closePanelBtn');
-
-document.getElementById('openMenuBtn').addEventListener('click', openPanel);
-closePanelBtn.addEventListener('click', closePanel);
-overlay.addEventListener('click', closePanel);
-
-function openPanel(){
-  overlay.classList.add('show');
-  slidePanel.classList.add('show');
-  overlay.style.pointerEvents = 'auto';
-  slidePanel.setAttribute('aria-hidden','false');
-  overlay.setAttribute('aria-hidden','false');
-}
-function closePanel(){
-  slidePanel.classList.remove('show');
-  overlay.classList.remove('show');
-  slidePanel.setAttribute('aria-hidden','true');
-  overlay.setAttribute('aria-hidden','true');
-}
-
-/* ---------- Admin login & panel ---------- */
-const adminBtn = document.getElementById('adminBtn');
-const adminPanel = document.getElementById('adminPanel');
-const downloadBtn = document.getElementById('downloadBtn');
-const clearBtn = document.getElementById('clearBtn');
-const entriesTableBody = document.querySelector('#entriesTable tbody');
-
-adminBtn.addEventListener('click', ()=>{
-  const pass = prompt('Enter admin password:');
-  if(pass === 'escape2025'){
-    adminPanel.style.display = 'block';
-    loadAdminTable();
-    window.scrollTo({top:0, behavior:'smooth'});
-  } else if(pass !== null){
-    alert('Incorrect password.');
-  }
-});
-
-function loadAdminTable(){
-  const entries = readEntries();
-  entriesTableBody.innerHTML = '';
-  entries.forEach(e=>{
-    const tr = document.createElement('tr');
-    tr.innerHTML = `<td>${escapeHtml(e.realName||'')}</td>
-                    <td>${escapeHtml(e.codeName||'')}</td>
-                    <td>${escapeHtml(e.gender||'')}</td>
-                    <td>${escapeHtml(e.wish1||'')}</td>
-                    <td>${escapeHtml(e.wish2||'')}</td>
-                    <td>${escapeHtml(e.wish3||'')}</td>
-                    <td>${escapeHtml(e.coffee||'')}</td>`;
-    entriesTableBody.appendChild(tr);
-  });
-}
-
-/* Download CSV */
-downloadBtn.addEventListener('click', ()=>{
-  const entries = readEntries();
-  if(!entries.length){ alert('No entries to download.'); return; }
-  let csv = 'Real Name,Code Name,Gender,Wish Item 1,Wish Item 2,Wish Item 3,Coffee Order\n';
-  entries.forEach(e=>{
-    csv += `"${csvSafe(e.realName)}","${csvSafe(e.codeName)}","${csvSafe(e.gender)}","${csvSafe(e.wish1)}","${csvSafe(e.wish2)}","${csvSafe(e.wish3)}","${csvSafe(e.coffee)}"\n`;
-  });
-  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = 'GhoulSwapEntries.csv';
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-  URL.revokeObjectURL(url);
-});
-
-/* Clear entries */
-clearBtn.addEventListener('click', ()=>{
-  if(confirm('Are you sure you want to clear ALL entries? This cannot be undone.')){
-    localStorage.removeItem(STORAGE_KEY);
-    loadAdminTable();
-    alert('All entries cleared.');
-  }
-});
-
-/* helper: sanitize for CSV */
-function csvSafe(s){
-  if(!s && s!==0) return '';
-  return String(s).replace(/"/g,'""');
-}
-
-/* helper: escapeHtml for table display */
-function escapeHtml(unsafe){
-  if(!unsafe && unsafe!==0) return '';
-  return String(unsafe).replace(/[&<>"'`]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;', '`':'&#96;'})[c]);
-}
-
-/* ensure admin table is kept in sync if user interacts */
-window.addEventListener('storage', ()=>{
-  if(adminPanel.style.display === 'block') loadAdminTable();
-});
-
-/* On admin open, also refresh table when clicking download/clear */
-downloadBtn.addEventListener('click', loadAdminTable);
-clearBtn.addEventListener('click', loadAdminTable);
-
-/* make sure attachments via "Attach to Latest" also refresh admin table */
-function refreshAdminIfOpen(){ if(adminPanel.style.display==='block') loadAdminTable(); }
-/* attachMutation to update on change (called after actions) */
-function afterDataChange(){ refreshAdminIfOpen(); }
-
-/* replace localStorage key in clear button handler above (fix) */
-const STORAGE_KEY = 'ghoulGiftEntries_v1'; // used by helper functions above
-// we used earlier STORAGE_KEY in read/write, but clearBtn referenced STORAGE_KEY variable different name earlier
-// ensure clearBtn uses same key:
-clearBtn.removeEventListener('click', ()=>{}); // safe remove if duplicate
-clearBtn.addEventListener('click', ()=>{
-  if(confirm('Are you sure you want to clear ALL entries? This cannot be undone.')){
-    localStorage.removeItem(STORAGE_KEY);
-    loadAdminTable();
-    alert('All entries cleared.');
-  }
-});
-
-/* small fix: ensure loadAdminTable called after saves */
-(function attachGlobalSaveHooks(){
-  const oldGiftHandler = giftForm.onsubmit;
-  // we already handle giftForm submission above; ensure admin table updates:
-  giftForm.addEventListener('submit', ()=>{ afterDataChange(); });
-  document.getElementById('saveLocBtn').addEventListener('click', ()=>{ afterDataChange(); });
-  coffeeForm.addEventListener('submit', ()=>{ afterDataChange(); });
-  document.getElementById('attachLatestBtn').addEventListener('click', ()=>{ afterDataChange(); });
-})();
-
-/* small accessibility: close panel with ESC key */
-document.addEventListener('keydown', (e)=>{
-  if(e.key === 'Escape'){
-    if(slidePanel.classList.contains('show')) closePanel();
-  }
-});
-
-/* IMPORTANT: provide an easy way for you to edit placeholder images later:
-   Each <img> inside .menu-item carries data-src-editable attribute.
-   You can replace .src via devtools or by script if you want.
-*/
-</script>
+  <script>
+    function openMenu() {
+      document.getElementById('menuPanel').classList.add('open');
+      document.getElementById('menuOverlay').classList.add('show');
+    }
+    function closeMenu() {
+      document.getElementById('menuPanel').classList.remove('open');
+      document.getElementById('menuOverlay').classList.remove('show');
+    }
+  </script>
 </body>
 </html>
