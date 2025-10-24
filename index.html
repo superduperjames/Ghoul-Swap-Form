@@ -176,24 +176,27 @@
       transition: transform 0.3s ease-in-out;
       z-index: 1000;
       border-radius: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
 
     .menu-panel.active {
       transform: translateX(0);
     }
 
-    .menu-image-container {
-      width: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+    .menu-link-container {
+      text-align: center;
     }
 
-    #menuImage {
-      width: 100%;
-      height: auto;
-      object-fit: contain;
-      border-radius: 10px;
+    #menuLink {
+      font-size: 16pt;
+      color: #ff5555;
+      text-decoration: underline;
+    }
+
+    #menuLink:hover {
+      color: #ff9999;
     }
 
     .see-menu-btn {
@@ -276,8 +279,8 @@
   <!-- Menu Panel -->
   <div class="menu-panel" id="menuPanel">
     <button class="close-btn" id="closeMenu">Close ✕</button>
-    <div class="menu-image-container">
-      <img src="YOUR_MENU_IMAGE_URL_HERE" alt="Full Menu" id="menuImage">
+    <div class="menu-link-container">
+      <a href="YOUR_MENU_URL_HERE" target="_blank" id="menuLink">Click here to view the full menu</a>
     </div>
   </div>
 
