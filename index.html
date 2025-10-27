@@ -17,7 +17,7 @@
     h1 {
       text-align: center;
       font-size: 2em;
-      color:white;
+      color: #ff6666;
       margin-top: 40px;
       margin-bottom: 25px;
     }
@@ -26,11 +26,11 @@
       max-width: 1000px;
       margin: 0 auto 60px auto;
       background: rgba(0, 0, 0, 0.65);
-      padding: 40px;
+      padding: 30px;
       border-radius: 20px;
       box-shadow: 0 0 25px rgba(255, 255, 255, 0.15);
       display: flex;
-      gap: 40px; /* Adds spacing between left and right boxes */
+      gap: 40px; /* More space between boxes */
       justify-content: space-between;
       align-items: stretch;
     }
@@ -38,13 +38,13 @@
     form {
       display: flex;
       flex-direction: column;
-      gap: 16px; /* More space between input boxes */
+      gap: 15px; /* More space between input fields */
       height: 100%;
     }
 
     input, textarea {
       width: 100%;
-      padding: 15px 10px;
+      padding: 8px;
       border: none;
       border-radius: 8px;
       font-size: 0.9em;
@@ -54,14 +54,14 @@
       flex: 1;
       display: flex;
       flex-direction: column;
-      gap: 20px;
+      gap: 15px;
     }
 
     .coffee-box {
       flex: 1;
       background: rgba(0,0,0,0.4);
       border-radius: 15px;
-      padding: 25px;
+      padding: 20px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -71,7 +71,7 @@
       background: #ff4b4b;
       color: #fff;
       border: none;
-      padding: 12px 16px;
+      padding: 12px;
       font-size: 1em;
       border-radius: 10px;
       cursor: pointer;
@@ -127,20 +127,17 @@
       background: #ff4b4b;
     }
 
-    @media (max-width: 900px) {
+    @media (max-width: 800px) {
       .container {
         flex-direction: column;
-        gap: 30px;
-      }
-      button {
-        align-self: stretch;
+        gap: 20px;
       }
     }
   </style>
 </head>
 <body>
 
-  <h1>Ghoul Swap & Coffee Order</h1>
+  <h1>👻 Ghoul Swap & Coffee Order</h1>
 
   <div class="container">
     <!-- Left: Ghoul Swap Form -->
@@ -160,7 +157,7 @@
     <div class="coffee-box">
       <div>
         <textarea form="ghoulForm" name="coffeeOrder" placeholder="Starbucks Coffee Order"></textarea>
-        <a href="https://www.starbucks.ph/menu" target="_blank" class="menu-link">☕ See Menu</a>
+        <a href="https://www.starbucks.com/menu" target="_blank" class="menu-link">☕ See Menu</a>
       </div>
       <button type="submit" form="ghoulForm">Submit Swap Gift Entry and Coffee Order</button>
     </div>
@@ -169,13 +166,14 @@
   <div class="admin-login" id="adminLogin">🔑 Admin Login</div>
 
   <script>
-    // ✅ Your live Google Apps Script Web App URL
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbzLy2-3wj0RsdCLRi_0SKEacC_TPC30fBKNsXgDxWmE2j1aw5H2QFu6zbbQHJv9-zrvWA/exec';
+    // ✅ Updated Google Apps Script Web App URL
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbwCp79r5Xcbhj8HnDjaeEmhjB-8if_j6RcPL52Y3HbB1Bo09bNKdc4yr_s4c1YCgaDruA/exec';
 
     const form = document.getElementById('ghoulForm');
     const loading = document.getElementById('loading');
     const adminLogin = document.getElementById('adminLogin');
 
+    // 📝 Form Submission
     form.addEventListener('submit', async e => {
       e.preventDefault();
       loading.style.display = 'block';
@@ -200,11 +198,27 @@
       }
     });
 
-    // 🔐 Admin password prompt + download trigger
-    adminLogin.addEventListener('click', () => {
+    // 🔐 Admin password + automatic CSV download
+    adminLogin.addEventListener('click', async () => {
       const password = prompt('Enter Admin Password:');
       if (password === 'escape2025') {
-        window.open(scriptURL, '_blank');
+        try {
+          const response = await fetch(scriptURL + '?action=download');
+          if (!response.ok) throw new Error('Network response was not ok');
+          const blob = await response.blob();
+          const url = window.URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = 'ghoul_swap_entries.csv';
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          window.URL.revokeObjectURL(url);
+          alert('✅ Entries downloaded successfully!');
+        } catch (err) {
+          console.error(err);
+          alert('⚠️ Failed to download entries.');
+        }
       } else if (password) {
         alert('❌ Wrong password, spirit denied access!');
       }
