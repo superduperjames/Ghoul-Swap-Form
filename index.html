@@ -15,28 +15,48 @@
       overflow-x: hidden;
     }
 
-    .container {
+    h1 {
+      text-align: center;
+      font-size: 2em;
+      color: #ff6666;
+      margin-top: 50px;
+    }
+
+    .form-wrapper {
       max-width: 1000px;
-      margin: 60px auto;
+      margin: 40px auto;
       background: rgba(0, 0, 0, 0.65);
       padding: 30px;
       border-radius: 20px;
       box-shadow: 0 0 25px rgba(255, 255, 255, 0.15);
       display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .form-sections {
+      display: flex;
+      justify-content: space-between;
       gap: 30px;
       flex-wrap: wrap;
     }
 
-    h1 {
-      text-align: center;
-      font-size: 2em;
-      color: #ff6666;
-      width: 100%;
+    .box {
+      flex: 1 1 48%;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 15px;
+      padding: 20px;
+      min-height: 380px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
     }
 
-    form {
-      display: grid;
-      gap: 10px;
+    .box h2 {
+      color: #ffb84b;
+      text-align: center;
+      margin-bottom: 15px;
     }
 
     input, textarea {
@@ -45,43 +65,36 @@
       border: none;
       border-radius: 8px;
       font-size: 1em;
+      margin-bottom: 10px;
+    }
+
+    textarea {
+      min-height: 180px;
+      resize: vertical;
     }
 
     button {
       background: #ff4b4b;
       color: #fff;
       border: none;
-      padding: 12px;
+      padding: 12px 20px;
       font-size: 1.1em;
       border-radius: 10px;
       cursor: pointer;
-      transition: 0.2s ease;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 10px rgba(255, 75, 75, 0.4);
     }
 
     button:hover {
       background: #ff2222;
-      transform: scale(1.02);
+      transform: scale(1.05);
+      box-shadow: 0 0 20px rgba(255, 50, 50, 0.9);
     }
 
-    .form-left {
-      flex: 1 1 55%;
-    }
-
-    .coffee-box {
-      flex: 1 1 40%;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      border-radius: 15px;
-      padding: 20px;
+    .submit-area {
       display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-
-    .coffee-box h2 {
-      color: #ffb84b;
-      margin-bottom: 15px;
-      text-align: center;
+      justify-content: flex-end;
+      margin-top: 10px;
     }
 
     .see-menu {
@@ -104,7 +117,14 @@
       transform: scale(1.05);
     }
 
-    /* Admin button styling */
+    .loading {
+      text-align: center;
+      color: #ccc;
+      display: none;
+      margin-top: 10px;
+    }
+
+    /* Admin buttons */
     .admin-login {
       position: fixed;
       top: 20px;
@@ -142,13 +162,6 @@
 
     .admin-download:hover {
       background: #ff4b4b;
-    }
-
-    .loading {
-      text-align: center;
-      margin-top: 10px;
-      color: #ccc;
-      display: none;
     }
 
     /* Modal popup */
@@ -201,47 +214,55 @@
     }
 
     @media (max-width: 768px) {
-      .container {
+      .form-sections {
         flex-direction: column;
+      }
+      .box {
+        flex: 1 1 100%;
+      }
+      .submit-area {
+        justify-content: center;
       }
     }
   </style>
 </head>
 
 <body>
-
-  <div class="container">
-    <h1>👻 Ghoul Swap & Coffee Order</h1>
-
-    <!-- Ghoul Swap Form (Left) -->
-    <div class="form-left">
-      <form id="ghoulForm">
-        <input name="realName" placeholder="Real Name*" required>
-        <input name="codeName" placeholder="Code Name*" required>
-        <input name="gender" placeholder="Gender*" required>
-        <input name="wish1" placeholder="Wish Item 1">
-        <input name="wish2" placeholder="Wish Item 2">
-        <input name="wish3" placeholder="Wish Item 3">
-        <button type="submit">Submit Swap Gift Entry 🎁</button>
-        <div class="loading" id="loading">Saving your entry… don’t wake the spirits 👻</div>
-      </form>
-    </div>
-
-    <!-- Starbucks Order Box (Right) -->
-    <div class="coffee-box">
-      <div>
-        <h2>☕ Starbucks Coffee Order</h2>
-        <textarea name="coffeeOrder" form="ghoulForm" placeholder="Enter your coffee order here..."></textarea>
-        <div class="see-menu">
-          <a href="https://www.starbucks.ph/menu" target="_blank">See Menu ☕</a>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Admin Buttons -->
   <div class="admin-login" id="adminLoginBtn">🔑 Admin Login</div>
   <div class="admin-download" id="downloadBtn">📜 Download All Entries</div>
+
+  <h1>👻 Ghoul Swap & Coffee Order</h1>
+
+  <div class="form-wrapper">
+    <form id="ghoulForm">
+      <div class="form-sections">
+        <!-- Ghoul Swap Form -->
+        <div class="box">
+          <h2>🎁 Ghoul Swap Form</h2>
+          <input name="realName" placeholder="Real Name*" required>
+          <input name="codeName" placeholder="Code Name*" required>
+          <input name="gender" placeholder="Gender*" required>
+          <input name="wish1" placeholder="Wish Item 1">
+          <input name="wish2" placeholder="Wish Item 2">
+          <input name="wish3" placeholder="Wish Item 3">
+        </div>
+
+        <!-- Coffee Order Box -->
+        <div class="box">
+          <h2>☕ Starbucks Coffee Order</h2>
+          <textarea name="coffeeOrder" placeholder="Enter your coffee order here..."></textarea>
+          <div class="see-menu">
+            <a href="https://www.starbucks.ph/menu" target="_blank">See Menu ☕</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="submit-area">
+        <button type="submit" id="submitBtn">Submit Swap Gift Entry ☕</button>
+      </div>
+      <div class="loading" id="loading">Saving your entry… don’t wake the spirits 👻</div>
+    </form>
+  </div>
 
   <!-- Admin Modal -->
   <div class="modal" id="adminModal">
@@ -259,7 +280,6 @@
     const loading = document.getElementById('loading');
     const downloadBtn = document.getElementById('downloadBtn');
     const adminLoginBtn = document.getElementById('adminLoginBtn');
-
     const adminModal = document.getElementById('adminModal');
     const closeModal = document.getElementById('closeModal');
     const loginConfirmBtn = document.getElementById('loginConfirmBtn');
