@@ -12,284 +12,178 @@
       color: #fff;
       margin: 0;
       padding: 0;
-      overflow-x: hidden;
     }
 
     h1 {
       text-align: center;
       font-size: 2em;
       color: #ff6666;
-      margin-top: 50px;
+      margin-top: 40px;
+      margin-bottom: 25px;
     }
 
-    .form-wrapper {
+    .container {
       max-width: 1000px;
-      margin: 40px auto;
+      margin: 0 auto 60px auto;
       background: rgba(0, 0, 0, 0.65);
       padding: 30px;
       border-radius: 20px;
       box-shadow: 0 0 25px rgba(255, 255, 255, 0.15);
       display: flex;
-      flex-direction: column;
       gap: 20px;
-    }
-
-    .form-sections {
-      display: flex;
       justify-content: space-between;
-      gap: 30px;
-      flex-wrap: wrap;
+      align-items: stretch; /* Keeps both boxes the same height */
     }
 
-    .box {
-      flex: 1 1 48%;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      border-radius: 15px;
-      padding: 20px;
-      min-height: 380px;
+    form {
       display: flex;
       flex-direction: column;
-      justify-content: flex-start;
-    }
-
-    .box h2 {
-      color: #ffb84b;
-      text-align: center;
-      margin-bottom: 15px;
+      gap: 10px;
+      height: 100%;
     }
 
     input, textarea {
       width: 100%;
-      padding: 10px;
+      padding: 8px;
       border: none;
       border-radius: 8px;
-      font-size: 1em;
-      margin-bottom: 10px;
+      font-size: 0.9em;
     }
 
-    textarea {
-      min-height: 180px;
-      resize: vertical;
+    .box {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .coffee-box {
+      flex: 1;
+      background: rgba(0,0,0,0.4);
+      border-radius: 15px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
     }
 
     button {
       background: #ff4b4b;
       color: #fff;
       border: none;
-      padding: 12px 20px;
-      font-size: 1.1em;
+      padding: 12px;
+      font-size: 1em;
       border-radius: 10px;
       cursor: pointer;
-      transition: all 0.3s ease;
-      box-shadow: 0 0 10px rgba(255, 75, 75, 0.4);
+      transition: 0.2s ease;
+      align-self: flex-end;
+      margin-top: auto;
     }
 
     button:hover {
       background: #ff2222;
-      transform: scale(1.05);
-      box-shadow: 0 0 20px rgba(255, 50, 50, 0.9);
+      transform: scale(1.02);
     }
 
-    .submit-area {
-      display: flex;
-      justify-content: flex-end;
-      margin-top: 10px;
-    }
-
-    .see-menu {
+    .menu-link {
+      background: transparent;
+      border: 1px solid #ff4b4b;
+      color: #ff4b4b;
+      border-radius: 10px;
+      padding: 10px;
+      font-size: 0.9em;
       text-align: center;
+      text-decoration: none;
+      transition: 0.2s ease;
       margin-top: 10px;
     }
 
-    .see-menu a {
-      color: #fff;
-      text-decoration: underline;
-      background:none;
-      display: inline-block;
-      transition: 0.2s;
-    }
-
-    .see-menu a:hover {
-      background: #ff2222;
-      transform: scale(1.05);
+    .menu-link:hover {
+      background: #ff4b4b;
+      color: white;
     }
 
     .loading {
       text-align: center;
+      margin-top: 10px;
       color: #ccc;
       display: none;
-      margin-top: 10px;
     }
 
-    /* Admin buttons */
+    /* Admin Login button */
     .admin-login {
       position: fixed;
-      top: 20px;
-      right: 25px;
-      background: rgba(0, 0, 0, 0.75);
+      top: 15px;
+      right: 20px;
+      background: rgba(0,0,0,0.75);
       color: #fff;
       padding: 10px 16px;
-      border-radius: 8px;
+      border-radius: 10px;
       border: 1px solid #ff4b4b;
       cursor: pointer;
       font-size: 0.9em;
       transition: 0.2s ease;
-      z-index: 10;
     }
 
     .admin-login:hover {
       background: #ff4b4b;
     }
 
-    .admin-download {
-      display: none;
-      position: fixed;
-      top: 20px;
-      right: 150px;
-      background: rgba(0,0,0,0.75);
-      color: #fff;
-      padding: 10px 16px;
-      border-radius: 8px;
-      border: 1px solid #ff4b4b;
-      cursor: pointer;
-      font-size: 0.9em;
-      transition: 0.2s ease;
-      z-index: 10;
-    }
-
-    .admin-download:hover {
-      background: #ff4b4b;
-    }
-
-    /* Modal popup */
-    .modal {
-      display: none;
-      position: fixed;
-      z-index: 20;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.6);
-      backdrop-filter: blur(4px);
-      justify-content: center;
-      align-items: center;
-    }
-
-    .modal-content {
-      background: rgba(30, 30, 30, 0.9);
-      border: 1px solid #ff4b4b;
-      border-radius: 12px;
-      padding: 25px 35px;
-      text-align: center;
-      width: 300px;
-      box-shadow: 0 0 20px rgba(255, 100, 100, 0.4);
-      position: relative;
-    }
-
-    .modal-content h2 {
-      margin-bottom: 15px;
-      color: #ff6666;
-    }
-
-    .modal-content input {
-      width: 100%;
-      padding: 10px;
-      border-radius: 8px;
-      border: none;
-      margin-bottom: 15px;
-      font-size: 1em;
-    }
-
-    .close-modal {
-      position: absolute;
-      top: 10px;
-      right: 15px;
-      color: #fff;
-      font-size: 1.2em;
-      cursor: pointer;
-    }
-
-    @media (max-width: 768px) {
-      .form-sections {
+    @media (max-width: 800px) {
+      .container {
         flex-direction: column;
-      }
-      .box {
-        flex: 1 1 100%;
-      }
-      .submit-area {
-        justify-content: center;
       }
     }
   </style>
 </head>
-
 <body>
-  <div class="admin-login" id="adminLoginBtn">🔑 Admin Login</div>
-  <div class="admin-download" id="downloadBtn">📜 Download All Entries</div>
 
-  <h1>👻 Ghoul Swap Form & Coffee Order</h1>
+  <h1>👻 Ghoul Swap & Coffee Order</h1>
 
-  <div class="form-wrapper">
-    <form id="ghoulForm">
-      <div class="form-sections">
-        <!-- Ghoul Swap Form -->
-        <div class="box">
-          <h2>🎁 Ghoul Swap Form</h2>
-          <input name="realName" placeholder="Real Name*" required>
-          <input name="codeName" placeholder="Code Name*" required>
-          <input name="gender" placeholder="Gender*" required>
-          <input name="wish1" placeholder="Wish Item 1">
-          <input name="wish2" placeholder="Wish Item 2">
-          <input name="wish3" placeholder="Wish Item 3">
-        </div>
+  <div class="container">
+    <!-- Left: Ghoul Swap Form -->
+    <div class="box">
+      <form id="ghoulForm">
+        <input name="realName" placeholder="Real Name*" required>
+        <input name="codeName" placeholder="Code Name*" required>
+        <input name="gender" placeholder="Gender*" required>
+        <input name="wish1" placeholder="Wish Item 1">
+        <input name="wish2" placeholder="Wish Item 2">
+        <input name="wish3" placeholder="Wish Item 3">
+        <div class="loading" id="loading">Saving your entry… don’t wake the spirits 👻</div>
+      </form>
+    </div>
 
-        <!-- Coffee Order Box -->
-        <div class="box">
-          <h2>☕ Starbucks Coffee Order</h2>
-          <textarea name="coffeeOrder" placeholder="Enter your coffee order here..."></textarea>
-          <div class="see-menu">
-            <a href="https://www.starbucks.ph/menu" target="_blank">See Menu ☕</a>
-          </div>
-        </div>
+    <!-- Right: Coffee Order -->
+    <div class="coffee-box">
+      <div>
+        <textarea form="ghoulForm" name="coffeeOrder" placeholder="Starbucks Coffee Order"></textarea>
+        <a href="https://www.starbucks.com/menu" target="_blank" class="menu-link">☕ See Menu</a>
       </div>
-
-      <div class="submit-area">
-        <button type="submit" id="submitBtn">Submit Swap Gift Entry and Coffee Order</button>
-      </div>
-      <div class="loading" id="loading">Saving your entry… don’t wake the spirits 👻</div>
-    </form>
-  </div>
-
-  <!-- Admin Modal -->
-  <div class="modal" id="adminModal">
-    <div class="modal-content">
-      <span class="close-modal" id="closeModal">&times;</span>
-      <h2>🧛 Admin Login</h2>
-      <input type="password" id="adminPassword" placeholder="Enter password">
-      <button id="loginConfirmBtn">Login</button>
+      <button type="submit" form="ghoulForm">Submit Swap Gift Entry 🎁</button>
     </div>
   </div>
 
+  <div class="admin-login" id="adminLogin">🔑 Admin Login</div>
+
   <script>
+    // ✅ Your live Google Apps Script Web App URL
     const scriptURL = 'https://script.google.com/macros/s/AKfycbzLy2-3wj0RsdCLRi_0SKEacC_TPC30fBKNsXgDxWmE2j1aw5H2QFu6zbbQHJv9-zrvWA/exec';
+
     const form = document.getElementById('ghoulForm');
     const loading = document.getElementById('loading');
-    const downloadBtn = document.getElementById('downloadBtn');
-    const adminLoginBtn = document.getElementById('adminLoginBtn');
-    const adminModal = document.getElementById('adminModal');
-    const closeModal = document.getElementById('closeModal');
-    const loginConfirmBtn = document.getElementById('loginConfirmBtn');
-    const adminPassword = document.getElementById('adminPassword');
+    const adminLogin = document.getElementById('adminLogin');
 
     form.addEventListener('submit', async e => {
       e.preventDefault();
       loading.style.display = 'block';
+
       const formData = new FormData(form);
+
       try {
         const response = await fetch(scriptURL, { method: 'POST', body: formData });
         const text = await response.text();
+
         if (text.includes('Success')) {
           alert('🕸️ Your entry has been saved!');
           form.reset();
@@ -304,32 +198,16 @@
       }
     });
 
-    adminLoginBtn.addEventListener('click', () => {
-      adminModal.style.display = 'flex';
-      adminPassword.value = '';
-    });
-
-    closeModal.addEventListener('click', () => {
-      adminModal.style.display = 'none';
-    });
-
-    window.addEventListener('click', e => {
-      if (e.target === adminModal) adminModal.style.display = 'none';
-    });
-
-    loginConfirmBtn.addEventListener('click', () => {
-      if (adminPassword.value === 'escape2025') {
-        alert('✅ Welcome, Admin!');
-        downloadBtn.style.display = 'inline-block';
-        adminModal.style.display = 'none';
-      } else {
-        alert('❌ Incorrect password. Try again.');
+    // 🔐 Admin password prompt + download trigger
+    adminLogin.addEventListener('click', () => {
+      const password = prompt('Enter Admin Password:');
+      if (password === 'escape2025') {
+        window.open(scriptURL, '_blank');
+      } else if (password) {
+        alert('❌ Wrong password, spirit denied access!');
       }
     });
-
-    downloadBtn.addEventListener('click', () => {
-      window.open(scriptURL, '_blank');
-    });
   </script>
+
 </body>
 </html>
