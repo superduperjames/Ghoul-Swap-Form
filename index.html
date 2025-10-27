@@ -108,25 +108,28 @@
       display: none;
     }
 
-    /* Admin Login floating button */
+    /* Admin Login floating ghostly button */
     .admin-login {
       position: fixed;
       top: 15px;
       right: 20px;
-      background: rgba(0,0,0,0.5);
+      background: rgba(255, 255, 255, 0.1); /* ghostly transparent */
       color: #fff;
       padding: 6px 12px;
       border-radius: 8px;
-      border: 1px solid #ff4b4b;
+      border: 1px solid rgba(255, 75, 75, 0.6);
       cursor: pointer;
       font-size: 0.85em;
-      transition: 0.2s ease;
+      transition: 0.3s ease;
       z-index: 9999;
+      text-shadow: 0 0 6px rgba(255,255,255,0.5);
     }
 
     .admin-login:hover {
-      background: #ff4b4b;
+      background: rgba(255, 75, 75, 0.9);
       color: #fff;
+      text-shadow: 0 0 8px #fff;
+      transform: scale(1.05);
     }
 
     @media (max-width: 900px) {
