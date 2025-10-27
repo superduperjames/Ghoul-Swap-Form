@@ -30,7 +30,7 @@
       border-radius: 20px;
       box-shadow: 0 0 25px rgba(255, 255, 255, 0.15);
       display: flex;
-      gap: 40px; /* Adds spacing between left and right boxes */
+      gap: 40px;
       justify-content: space-between;
       align-items: stretch;
     }
@@ -38,7 +38,7 @@
     form {
       display: flex;
       flex-direction: column;
-      gap: 16px; /* More space between input boxes */
+      gap: 16px;
       height: 100%;
     }
 
@@ -108,23 +108,25 @@
       display: none;
     }
 
-    /* Admin Login button */
+    /* Admin Login floating button */
     .admin-login {
       position: fixed;
       top: 15px;
       right: 20px;
-      background: rgba(0,0,0,0.75);
+      background: rgba(0,0,0,0.5);
       color: #fff;
-      padding: 10px 16px;
-      border-radius: 10px;
+      padding: 6px 12px;
+      border-radius: 8px;
       border: 1px solid #ff4b4b;
       cursor: pointer;
-      font-size: 0.9em;
+      font-size: 0.85em;
       transition: 0.2s ease;
+      z-index: 9999;
     }
 
     .admin-login:hover {
       background: #ff4b4b;
+      color: #fff;
     }
 
     @media (max-width: 900px) {
@@ -166,10 +168,9 @@
     </div>
   </div>
 
-  <div class="admin-login" id="adminLogin">🔑 Admin Login</div>
+  <div class="admin-login" id="adminLogin">🔑 Admin</div>
 
   <script>
-    // ✅ Your live Google Apps Script Web App URL
     const scriptURL = 'https://script.google.com/macros/s/AKfycbzLy2-3wj0RsdCLRi_0SKEacC_TPC30fBKNsXgDxWmE2j1aw5H2QFu6zbbQHJv9-zrvWA/exec';
 
     const form = document.getElementById('ghoulForm');
@@ -200,11 +201,11 @@
       }
     });
 
-    // 🔐 Admin password prompt + download trigger
+    // Admin login opens Google Sheet link
     adminLogin.addEventListener('click', () => {
       const password = prompt('Enter Admin Password:');
       if (password === 'escape2025') {
-        window.open(scriptURL, '_blank');
+        window.open('https://docs.google.com/spreadsheets/d/124LIz_k7aQ3u3Z8Om_PZnb9mxkeZtHAPsPSce2bpPl0/edit?gid=0#gid=0', '_blank');
       } else if (password) {
         alert('❌ Wrong password, spirit denied access!');
       }
