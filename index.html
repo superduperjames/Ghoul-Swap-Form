@@ -2,357 +2,132 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ghoul Swap & Coffee Order</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🎃 Ghoul Swap Form</title>
   <style>
     body {
-      margin: 0;
-      font-family: "Poppins", sans-serif;
+      font-family: 'Poppins', sans-serif;
       background: url('https://res.cloudinary.com/eventmobi/image/upload/v1761237992/_James%20Assets/.test%20app%20assets/Abstract%20Backgrounds/Haunted%20Background/2151153754.jpg') no-repeat center center fixed;
       background-size: cover;
-      color: white;
-      overflow-x: hidden;
+      color: #fff;
+      margin: 0;
+      padding: 0;
     }
-
-    .form-container {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 20px;
-      padding: 80px 20px;
-    }
-
-    .form-box {
-      background: rgba(0, 0, 0, 0.85);
-      padding: 20px 30px;
-      border-radius: 15px;
-      flex: 1;
-      min-width: 300px;
-      max-width: 500px;
-      box-shadow: 0 0 20px rgba(255,255,255,0.05);
-    }
-
-    label {
-      font-size: 12pt;
-      display: block;
-      margin-bottom: 5px;
-      color: white;
-    }
-
-    input, textarea {
-      width: 95%;
-      padding: 10px;
-      margin-bottom: 15px;
-      border: none;
-      border-radius: 5px;
-      background: rgba(255,255,255,0.15);
-      color: white;
-      font-size: 12pt;
-    }
-
-    textarea {
-      height: 80px;
-      resize: none;
-    }
-
-    input::placeholder, textarea::placeholder {
-      color: rgba(255,255,255,0.7);
-    }
-
-    button {
-      cursor: pointer;
-    }
-
-    .submit-btn {
-      position: fixed;
-      bottom: 30px;
-      right: 30px;
-      background: #b30000;
-      color: white;
-      font-size: 14pt;
-      border: none;
-      border-radius: 50px;
-      padding: 15px 30px;
-      box-shadow: 0 0 10px rgba(255,0,0,0.4);
-      transition: all 0.3s ease;
-      z-index: 20;
-    }
-
-    .submit-btn:hover {
-      box-shadow: 0 0 25px rgba(255,0,0,0.9);
-      transform: scale(1.05);
-    }
-
-    /* Admin Button */
-    .admin-btn {
-      position: fixed;
-      top: 15px;
-      right: 25px;
-      color: white;
-      font-size: 12pt;
-      background: none;
-      border: none;
-      cursor: pointer;
-      z-index: 50;
-      opacity: 0.8;
-    }
-    .admin-btn:hover {
-      opacity: 1;
-      text-decoration: underline;
-    }
-
-    /* Admin Panel */
-    .admin-panel {
-      position: fixed;
-      top: -100%;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 90%;
-      max-width: 400px;
-      background: rgba(0, 0, 0, 0.95);
-      border-radius: 15px;
+    .container {
+      max-width: 800px;
+      margin: 60px auto;
+      background: rgba(0, 0, 0, 0.65);
       padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 0 25px rgba(255, 255, 255, 0.15);
+    }
+    h1 {
       text-align: center;
-      z-index: 200;
-      transition: top 0.5s ease;
+      font-size: 2em;
+      color: #ff6666;
+      margin-bottom: 25px;
     }
-    .admin-panel.active {
-      top: 10%;
+    form {
+      display: grid;
+      gap: 10px;
     }
-
-    .admin-panel input {
-      background: rgba(255,255,255,0.2);
-    }
-
-    .admin-panel button {
-      margin-top: 10px;
-      width: 20%;
-      padding: 10px;
-      background: crimson;
-      color: white;
-      border: none;
-      border-radius: 5px;
-    }
-
-    .close-btn {
-      position: absolute;
-      top: 10px;
-      right: 15px;
-      background: none;
-      border: none;
-      color: white;
-      font-size: 12pt;
-      cursor: pointer;
-      font-weight: 600;
-      z-index: 210;
-      transition: color 0.3s ease, text-shadow 0.3s ease;
-    }
-    .close-btn:hover {
-      color: #ff5555;
-      text-shadow: 0 0 8px rgba(255,0,0,0.8);
-    }
-
-    .see-menu-btn {
-      background: #444;
-      color: white;
-      border: none;
-      padding: 10px 15px;
-      border-radius: 5px;
-      cursor: pointer;
-      font-size: 11pt;
-    }
-
-    .see-menu-btn:hover {
-      background: #666;
-    }
-
-    /* Loading Overlay */
-    .loading-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
+    input, textarea {
       width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.8);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      color: white;
-      font-size: 16pt;
-      z-index: 999;
+      padding: 10px;
+      border: none;
+      border-radius: 8px;
+      font-size: 1em;
+    }
+    button {
+      background: #ff4b4b;
+      color: #fff;
+      border: none;
+      padding: 12px;
+      font-size: 1.1em;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+    button:hover {
+      background: #ff2222;
+      transform: scale(1.02);
+    }
+    .admin-download {
+      position: fixed;
+      bottom: 25px;
+      right: 25px;
+      background: rgba(0,0,0,0.75);
+      color: #fff;
+      padding: 12px 18px;
+      border-radius: 10px;
+      border: 1px solid #ff4b4b;
+      cursor: pointer;
+      font-size: 0.9em;
+      transition: 0.2s ease;
+    }
+    .admin-download:hover {
+      background: #ff4b4b;
+    }
+    .loading {
+      text-align: center;
+      margin-top: 10px;
+      color: #ccc;
       display: none;
-    }
-
-    .loading-circle {
-      width: 60px;
-      height: 60px;
-      border: 4px solid rgba(255,255,255,0.2);
-      border-top: 4px solid crimson;
-      border-radius: 50%;
-      animation: spin 1s linear infinite;
-      margin-bottom: 15px;
-    }
-
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-
-    @media (max-width: 768px) {
-      .form-container {
-        flex-direction: column;
-        align-items: center;
-      }
     }
   </style>
 </head>
 <body>
 
-  <!-- Admin Button -->
-  <button class="admin-btn" id="adminBtn">Admin Login</button>
+  <div class="container">
+    <h1>👻 Ghoul Swap & Coffee Order</h1>
 
-  <!-- Admin Panel -->
-  <div class="admin-panel" id="adminPanel">
-    <button class="close-btn" id="closeAdmin">Close ✕</button>
-    <h3>Admin Access</h3>
-    <input type="password" id="adminPassword" placeholder="Enter password">
-    <button id="adminLogin">Login</button>
-    <div id="adminActions" style="display:none;">
-      <button id="exportEntries">Export Entries</button>
-      <button id="clearEntries">Clear Entries</button>
-    </div>
+    <form id="ghoulForm">
+      <input name="Real Name" placeholder="Real Name*" required>
+      <input name="Code Name" placeholder="Code Name*" required>
+      <input name="Gender" placeholder="Gender*" required>
+      <input name="Wish 1" placeholder="Wish Item 1">
+      <input name="Wish 2" placeholder="Wish Item 2">
+      <input name="Wish 3" placeholder="Wish Item 3">
+      <textarea name="Coffee Order" placeholder="Starbucks Coffee Order"></textarea>
+      <button type="submit">Submit Swap Gift Entry ☕</button>
+      <div class="loading" id="loading">Saving your entry… don’t wake the spirits 👻</div>
+    </form>
   </div>
 
-  <!-- Forms -->
-  <div class="form-container">
-    <!-- Ghoul Swap Form -->
-    <div class="form-box" id="swapForm">
-      <h2>🎁 Ghoul Swap Form</h2>
-      <label>Real Name*</label>
-      <input type="text" id="realName" required placeholder="Enter your real name">
-      <label>Code Name*</label>
-      <input type="text" id="codeName" required placeholder="Enter your code name">
-      <label>Gender*</label>
-      <input type="text" id="gender" required placeholder="Enter your gender">
-      <label>Wish Item 1</label>
-      <input type="text" id="wish1" placeholder="Link or item name">
-      <label>Wish Item 2</label>
-      <input type="text" id="wish2" placeholder="Link or item name">
-      <label>Wish Item 3</label>
-      <input type="text" id="wish3" placeholder="Link or item name">
-    </div>
-
-    <!-- Coffee Order Form -->
-    <div class="form-box" id="coffeeForm">
-      <h2>☕ Coffee Order Form</h2>
-      <label>Starbucks Coffee Order</label>
-      <textarea id="coffeeOrder" placeholder="Enter your drink order here"></textarea>
-      <a href="https://www.starbucks.ph/menu" target="_blank">
-        <button class="see-menu-btn">See Menu</button>
-      </a>
-    </div>
-  </div>
-
-  <!-- Submit Button -->
-  <button class="submit-btn" id="submitBtn">Submit Swap Gift Entry and Coffee Order</button>
-
-  <!-- Loading Overlay -->
-  <div class="loading-overlay" id="loadingOverlay">
-    <div class="loading-circle"></div>
-    <p>Saving your entry... don’t wake the spirits 👻</p>
-  </div>
+  <div class="admin-download" id="downloadBtn">📜 Download All Entries</div>
 
   <script>
-    const adminPanel = document.getElementById('adminPanel');
-    const adminBtn = document.getElementById('adminBtn');
-    const adminLogin = document.getElementById('adminLogin');
-    const adminActions = document.getElementById('adminActions');
-    const submitBtn = document.getElementById('submitBtn');
-    const exportBtn = document.getElementById('exportEntries');
-    const clearBtn = document.getElementById('clearEntries');
-    const closeAdmin = document.getElementById('closeAdmin');
-    const loadingOverlay = document.getElementById('loadingOverlay');
+    // 🔗 Connected Google Apps Script endpoint
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbzQ1RpGXTy7tNP29-zcJXyJGsu_2xiMjQiv-_D_ez5drpU7KuFnOpXgq69bdVe4C8o7QQ/exec';
 
-    // Admin login
-    adminBtn.addEventListener('click', () => {
-      adminPanel.classList.add('active');
-    });
+    const form = document.getElementById('ghoulForm');
+    const loading = document.getElementById('loading');
+    const downloadBtn = document.getElementById('downloadBtn');
 
-    closeAdmin.addEventListener('click', () => {
-      adminPanel.classList.remove('active');
-    });
+    form.addEventListener('submit', async e => {
+      e.preventDefault();
+      loading.style.display = 'block';
 
-    adminLogin.addEventListener('click', () => {
-      const pass = document.getElementById('adminPassword').value;
-      if (pass === 'escape2025') {
-        adminActions.style.display = 'block';
-      } else {
-        alert('Wrong password!');
+      try {
+        const response = await fetch(scriptURL, { method: 'POST', body: new FormData(form) });
+        const result = await response.text();
+
+        if (result.includes('Success')) {
+          alert('🕸️ Your entry has been saved!');
+          form.reset();
+        } else {
+          alert('⚠️ Failed to save entry. Please try again.');
+        }
+      } catch (error) {
+        alert('👻 Network error. Please try again.');
+      } finally {
+        loading.style.display = 'none';
       }
     });
 
-    // Save Entries to Google Sheets
-    submitBtn.addEventListener('click', () => {
-      const entry = {
-        realName: document.getElementById('realName').value,
-        codeName: document.getElementById('codeName').value,
-        gender: document.getElementById('gender').value,
-        wish1: document.getElementById('wish1').value,
-        wish2: document.getElementById('wish2').value,
-        wish3: document.getElementById('wish3').value,
-        coffeeOrder: document.getElementById('coffeeOrder').value
-      };
-
-      if (!entry.realName || !entry.codeName || !entry.gender) {
-        alert('Please fill out all required fields!');
-        return;
-      }
-
-      const scriptURL = 'https://script.google.com/macros/s/AKfycbw6kxiS56FF49HIm2EDpE6LXthRpzaQdwdKTkzY5_dEzaL-jKYNN9BFoRg7bIIKfmw00g/exec';
-
-      // Show loading spinner
-      loadingOverlay.style.display = 'flex';
-
-      fetch(scriptURL, {
-        method: 'POST',
-        body: JSON.stringify(entry),
-        headers: { 'Content-Type': 'application/json' }
-      })
-      .then(res => res.text())
-      .then(response => {
-        loadingOverlay.style.display = 'none';
-        alert('🎃 Entry saved successfully!');
-        document.querySelectorAll('input, textarea').forEach(e => e.value = '');
-      })
-      .catch(err => {
-        loadingOverlay.style.display = 'none';
-        console.error('Error!', err);
-        alert('⚠️ Failed to save entry. Please try again.');
-      });
-    });
-
-    // Export to CSV (local)
-    exportBtn.addEventListener('click', () => {
-      const entries = JSON.parse(localStorage.getItem('entries') || '[]');
-      if (entries.length === 0) return alert('No local entries found!');
-      let csv = 'Real Name,Code Name,Gender,Wish 1,Wish 2,Wish 3,Coffee Order\n';
-      entries.forEach(e => {
-        csv += `${e.realName},${e.codeName},${e.gender},${e.wish1},${e.wish2},${e.wish3},${e.coffeeOrder}\n`;
-      });
-      const blob = new Blob([csv], { type: 'text/csv' });
-      const a = document.createElement('a');
-      a.href = URL.createObjectURL(blob);
-      a.download = 'ghoul_swap_entries.csv';
-      a.click();
-    });
-
-    // Clear local entries
-    clearBtn.addEventListener('click', () => {
-      if (confirm('Are you sure you want to clear all local entries?')) {
-        localStorage.removeItem('entries');
-        alert('Local entries cleared!');
-      }
+    // 👑 Admin CSV download
+    downloadBtn.addEventListener('click', () => {
+      window.open(scriptURL, '_blank');
     });
   </script>
 </body>
