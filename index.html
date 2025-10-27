@@ -166,6 +166,39 @@
       background: #666;
     }
 
+    /* Loading Overlay */
+    .loading-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      color: white;
+      font-size: 16pt;
+      z-index: 999;
+      display: none;
+    }
+
+    .loading-circle {
+      width: 60px;
+      height: 60px;
+      border: 4px solid rgba(255,255,255,0.2);
+      border-top: 4px solid crimson;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin-bottom: 15px;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
     @media (max-width: 768px) {
       .form-container {
         flex-direction: column;
@@ -224,6 +257,12 @@
   <!-- Submit Button -->
   <button class="submit-btn" id="submitBtn">Submit Swap Gift Entry and Coffee Order</button>
 
+  <!-- Loading Overlay -->
+  <div class="loading-overlay" id="loadingOverlay">
+    <div class="loading-circle"></div>
+    <p>Saving your entry... don’t wake the spirits 👻</p>
+  </div>
+
   <script>
     const adminPanel = document.getElementById('adminPanel');
     const adminBtn = document.getElementById('adminBtn');
@@ -233,6 +272,7 @@
     const exportBtn = document.getElementById('exportEntries');
     const clearBtn = document.getElementById('clearEntries');
     const closeAdmin = document.getElementById('closeAdmin');
+    const loadingOverlay = document.getElementById('loadingOverlay');
 
     // Admin login
     adminBtn.addEventListener('click', () => {
@@ -252,48 +292,50 @@
       }
     });
 
-// Save Entries (Google Sheets Integration)
-submitBtn.addEventListener('click', () => {
-  const entry = {
-    realName: document.getElementById('realName').value,
-    codeName: document.getElementById('codeName').value,
-    gender: document.getElementById('gender').value,
-    wish1: document.getElementById('wish1').value,
-    wish2: document.getElementById('wish2').value,
-    wish3: document.getElementById('wish3').value,
-    coffeeOrder: document.getElementById('coffeeOrder').value
-  };
+    // Save Entries to Google Sheets
+    submitBtn.addEventListener('click', () => {
+      const entry = {
+        realName: document.getElementById('realName').value,
+        codeName: document.getElementById('codeName').value,
+        gender: document.getElementById('gender').value,
+        wish1: document.getElementById('wish1').value,
+        wish2: document.getElementById('wish2').value,
+        wish3: document.getElementById('wish3').value,
+        coffeeOrder: document.getElementById('coffeeOrder').value
+      };
 
-  // Validate required fields
-  if (!entry.realName || !entry.codeName || !entry.gender) {
-    alert('Please fill out all required fields!');
-    return;
-  }
+      if (!entry.realName || !entry.codeName || !entry.gender) {
+        alert('Please fill out all required fields!');
+        return;
+      }
 
-  // 🔗 Replace this with your Google Apps Script Web App URL:
-  const scriptURL = 'https://script.google.com/macros/s/AKfycbzoDMn8CqEBkVeSaknXAPNtzFw6uzNn3fRjZIF7R0DABbYngiysRV5ck0YGcS7Cs9Yx2A/exec';
+      const scriptURL = 'https://script.google.com/macros/s/AKfycbzzYEckOnlSo22YWMV6UvePSNxBjRutbGmu7z_CD0_q/dev';
 
-  fetch(scriptURL, {
-    method: 'POST',
-    body: JSON.stringify(entry),
-    headers: { 'Content-Type': 'application/json' }
-  })
-  .then(res => res.text())
-  .then(response => {
-    alert('🎃 Entry saved to the master list!');
-    document.querySelectorAll('input, textarea').forEach(e => e.value = '');
-  })
-  .catch(err => {
-    console.error('Error!', err);
-    alert('⚠️ Failed to save entry. Please try again.');
-  });
-});
+      // Show loading spinner
+      loadingOverlay.style.display = 'flex';
 
+      fetch(scriptURL, {
+        method: 'POST',
+        body: JSON.stringify(entry),
+        headers: { 'Content-Type': 'application/json' }
+      })
+      .then(res => res.text())
+      .then(response => {
+        loadingOverlay.style.display = 'none';
+        alert('🎃 Entry saved successfully!');
+        document.querySelectorAll('input, textarea').forEach(e => e.value = '');
+      })
+      .catch(err => {
+        loadingOverlay.style.display = 'none';
+        console.error('Error!', err);
+        alert('⚠️ Failed to save entry. Please try again.');
+      });
+    });
 
-    // Export to Excel
+    // Export to CSV (local)
     exportBtn.addEventListener('click', () => {
       const entries = JSON.parse(localStorage.getItem('entries') || '[]');
-      if (entries.length === 0) return alert('No entries found!');
+      if (entries.length === 0) return alert('No local entries found!');
       let csv = 'Real Name,Code Name,Gender,Wish 1,Wish 2,Wish 3,Coffee Order\n';
       entries.forEach(e => {
         csv += `${e.realName},${e.codeName},${e.gender},${e.wish1},${e.wish2},${e.wish3},${e.coffeeOrder}\n`;
@@ -305,11 +347,11 @@ submitBtn.addEventListener('click', () => {
       a.click();
     });
 
-    // Clear Entries
+    // Clear local entries
     clearBtn.addEventListener('click', () => {
-      if (confirm('Are you sure you want to clear all entries?')) {
+      if (confirm('Are you sure you want to clear all local entries?')) {
         localStorage.removeItem('entries');
-        alert('All entries cleared!');
+        alert('Local entries cleared!');
       }
     });
   </script>
