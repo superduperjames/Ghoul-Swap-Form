@@ -101,19 +101,12 @@
       color: white;
     }
 
-    .loading {
-      text-align: center;
-      margin-top: 10px;
-      color: #ccc;
-      display: none;
-    }
-
     /* Admin Login floating ghostly button */
     .admin-login {
       position: fixed;
       top: 15px;
       right: 20px;
-      background: rgba(255, 255, 255, 0.1); /* ghostly transparent */
+      background: rgba(255, 255, 255, 0.1);
       color: #fff;
       padding: 6px 12px;
       border-radius: 8px;
@@ -130,6 +123,38 @@
       color: #fff;
       text-shadow: 0 0 8px #fff;
       transform: scale(1.05);
+    }
+
+    /* Modal styling */
+    .modal {
+      display: none; /* Hidden by default */
+      position: fixed;
+      z-index: 9998;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.7); /* dark overlay */
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      background: rgba(0,0,0,0.9);
+      padding: 30px 40px;
+      border-radius: 15px;
+      text-align: center;
+      color: #fff;
+      font-size: 1.1em;
+      max-width: 400px;
+      box-shadow: 0 0 25px rgba(255, 255, 255, 0.2);
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.9);}
+      to { opacity: 1; transform: scale(1);}
     }
 
     @media (max-width: 900px) {
@@ -157,7 +182,6 @@
         <input name="wish1" placeholder="Wish Item 1">
         <input name="wish2" placeholder="Wish Item 2">
         <input name="wish3" placeholder="Wish Item 3">
-        <div class="loading" id="loading">Saving your entry… don’t wake the spirits 👻</div>
       </form>
     </div>
 
@@ -171,18 +195,26 @@
     </div>
   </div>
 
+  <!-- Admin login button -->
   <div class="admin-login" id="adminLogin">🔑 Admin</div>
+
+  <!-- Modal -->
+  <div id="modal" class="modal">
+    <div class="modal-content" id="modalContent">
+      Saving your entry… don’t wake the spirits 👻
+    </div>
+  </div>
 
   <script>
     const scriptURL = 'https://script.google.com/macros/s/AKfycbzLy2-3wj0RsdCLRi_0SKEacC_TPC30fBKNsXgDxWmE2j1aw5H2QFu6zbbQHJv9-zrvWA/exec';
 
     const form = document.getElementById('ghoulForm');
-    const loading = document.getElementById('loading');
+    const modal = document.getElementById('modal');
     const adminLogin = document.getElementById('adminLogin');
 
     form.addEventListener('submit', async e => {
       e.preventDefault();
-      loading.style.display = 'block';
+      modal.style.display = 'flex'; // show modal
 
       const formData = new FormData(form);
 
@@ -200,7 +232,7 @@
         console.error(error);
         alert('👻 Network error. Please try again.');
       } finally {
-        loading.style.display = 'none';
+        modal.style.display = 'none'; // hide modal
       }
     });
 
