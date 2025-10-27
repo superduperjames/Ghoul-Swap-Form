@@ -197,32 +197,6 @@
         loading.style.display = 'none';
       }
     });
-
-    // 🔐 Admin password + automatic CSV download
-    adminLogin.addEventListener('click', async () => {
-      const password = prompt('Enter Admin Password:');
-      if (password === 'escape2025') {
-        try {
-          const response = await fetch(scriptURL + '?action=download');
-          if (!response.ok) throw new Error('Network response was not ok');
-          const blob = await response.blob();
-          const url = window.URL.createObjectURL(blob);
-          const a = document.createElement('a');
-          a.href = url;
-          a.download = 'ghoul_swap_entries.csv';
-          document.body.appendChild(a);
-          a.click();
-          document.body.removeChild(a);
-          window.URL.revokeObjectURL(url);
-          alert('✅ Entries downloaded successfully!');
-        } catch (err) {
-          console.error(err);
-          alert('⚠️ Failed to download entries.');
-        }
-      } else if (password) {
-        alert('❌ Wrong password, spirit denied access!');
-      }
-    });
   </script>
 
 </body>
