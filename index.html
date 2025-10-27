@@ -97,8 +97,8 @@
   <div class="admin-download" id="downloadBtn">📜 Download All Entries</div>
 
   <script>
-    // ✅ Replace with your active deployed Web App URL
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbxXSDFvqvORqQAZuhZr5ad0WfASzi6OF9JgD0or8mQK5B6Jf8D63EXlqonTo0qALr3b-Q/exec';
+    // ✅ Your live Google Apps Script Web App URL
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbzQ1RpGXTy7tNP29-zcJXyJGsu_2xiMjQiv-_D_ez5drpU7KuFnOpXgq69bdVe4C8o7QQ/exec';
 
     const form = document.getElementById('ghoulForm');
     const loading = document.getElementById('loading');
@@ -108,31 +108,20 @@
       e.preventDefault();
       loading.style.display = 'block';
 
-      const data = {
-        realName: form.elements['realName'].value,
-        codeName: form.elements['codeName'].value,
-        gender: form.elements['gender'].value,
-        wish1: form.elements['wish1'].value,
-        wish2: form.elements['wish2'].value,
-        wish3: form.elements['wish3'].value,
-        coffeeOrder: form.elements['coffeeOrder'].value
-      };
+      const formData = new FormData(form);
 
       try {
-        const response = await fetch(scriptURL, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(data)
-        });
-        const result = await response.text();
+        const response = await fetch(scriptURL, { method: 'POST', body: formData });
+        const text = await response.text();
 
-        if (result.includes('Success')) {
+        if (text.includes('Success')) {
           alert('🕸️ Your entry has been saved!');
           form.reset();
         } else {
           alert('⚠️ Failed to save entry. Please try again.');
         }
       } catch (error) {
+        console.error(error);
         alert('👻 Network error. Please try again.');
       } finally {
         loading.style.display = 'none';
