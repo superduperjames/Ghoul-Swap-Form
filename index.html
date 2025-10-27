@@ -82,13 +82,13 @@
     <h1>👻 Ghoul Swap & Coffee Order</h1>
 
     <form id="ghoulForm">
-      <input name="Real Name" placeholder="Real Name*" required>
-      <input name="Code Name" placeholder="Code Name*" required>
-      <input name="Gender" placeholder="Gender*" required>
-      <input name="Wish 1" placeholder="Wish Item 1">
-      <input name="Wish 2" placeholder="Wish Item 2">
-      <input name="Wish 3" placeholder="Wish Item 3">
-      <textarea name="Coffee Order" placeholder="Starbucks Coffee Order"></textarea>
+      <input name="realName" placeholder="Real Name*" required>
+      <input name="codeName" placeholder="Code Name*" required>
+      <input name="gender" placeholder="Gender*" required>
+      <input name="wish1" placeholder="Wish Item 1">
+      <input name="wish2" placeholder="Wish Item 2">
+      <input name="wish3" placeholder="Wish Item 3">
+      <textarea name="coffeeOrder" placeholder="Starbucks Coffee Order"></textarea>
       <button type="submit">Submit Swap Gift Entry ☕</button>
       <div class="loading" id="loading">Saving your entry… don’t wake the spirits 👻</div>
     </form>
@@ -97,7 +97,7 @@
   <div class="admin-download" id="downloadBtn">📜 Download All Entries</div>
 
   <script>
-    // 🔗 Connected Google Apps Script endpoint
+    // ✅ Replace with your active deployed Web App URL
     const scriptURL = 'https://script.google.com/macros/s/AKfycbxXSDFvqvORqQAZuhZr5ad0WfASzi6OF9JgD0or8mQK5B6Jf8D63EXlqonTo0qALr3b-Q/exec';
 
     const form = document.getElementById('ghoulForm');
@@ -108,8 +108,22 @@
       e.preventDefault();
       loading.style.display = 'block';
 
+      const data = {
+        realName: form.elements['realName'].value,
+        codeName: form.elements['codeName'].value,
+        gender: form.elements['gender'].value,
+        wish1: form.elements['wish1'].value,
+        wish2: form.elements['wish2'].value,
+        wish3: form.elements['wish3'].value,
+        coffeeOrder: form.elements['coffeeOrder'].value
+      };
+
       try {
-        const response = await fetch(scriptURL, { method: 'POST', body: new FormData(form) });
+        const response = await fetch(scriptURL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
         const result = await response.text();
 
         if (result.includes('Success')) {
