@@ -193,8 +193,7 @@
   </div>
 
   <script>
-    // ✅ Updated Google Apps Script Web App URL
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbyg8geKLRkYaWmhs9QkYHTcuk4fqnUK6rnbccf0073iiuTkL4ZM-70lJAWKxxfMbRtgew/exec';
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbxj0sXQICPXlOPMIdRgAKsv8BOtxCjnOv5lKR4zfOw80pK13h12cyfYfWKfGZyM-rmaRw/exec';
     const form = document.getElementById('ghoulForm');
     const modal = document.getElementById('modal');
     const modalContent = document.getElementById('modalContent');
@@ -211,7 +210,7 @@
         const response = await fetch(scriptURL, { method: 'POST', body: formData });
         const text = await response.text();
 
-        if (response.ok || text.includes('Success')) {
+        if (text.trim() === 'Success') {
           modalContent.textContent = '🕸️ Your entry has been saved!';
           form.reset();
         } else {
