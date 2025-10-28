@@ -198,28 +198,37 @@
     const scriptURL = 'https://script.google.com/macros/s/AKfycbwe3K4EJLY1qnmHJr3usD6GhBT18YZ09KDbz3G-9hH77Gnh3zLA00s4j73Ge_ezWSqtTA/exec';
     const form = document.getElementById('ghoulForm');
     const modal = document.getElementById('modal');
+    const modalContent = document.getElementById('modalContent');
     const adminLogin = document.getElementById('adminLogin');
 
     form.addEventListener('submit', async e => {
       e.preventDefault();
+      modalContent.textContent = 'Saving your entry… don’t wake the spirits 👻';
       modal.style.display = 'flex';
 
       const formData = new FormData(form);
+      const plainData = Object.fromEntries(formData.entries());
+      const encoded = new URLSearchParams(plainData).toString();
 
       try {
         await fetch(scriptURL, {
           method: 'POST',
-          mode: 'no-cors',
-          body: formData
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: encoded
         });
 
-        alert('🕸️ Your entry has been saved!');
+        modalContent.textContent = '✅ Your entry has been saved! The spirits approve.';
         form.reset();
+
+        setTimeout(() => {
+          modal.style.display = 'none';
+        }, 1500);
       } catch (error) {
         console.error(error);
-        alert('👻 Network error. Please try again.');
-      } finally {
-        modal.style.display = 'none';
+        modalContent.textContent = '👻 Network error. Please try again.';
+        setTimeout(() => {
+          modal.style.display = 'none';
+        }, 2000);
       }
     });
 
