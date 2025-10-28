@@ -158,13 +158,8 @@
     }
 
     @media (max-width: 900px) {
-      .container {
-        flex-direction: column;
-        gap: 30px;
-      }
-      button {
-        align-self: stretch;
-      }
+      .container { flex-direction: column; gap: 30px; }
+      button { align-self: stretch; }
     }
   </style>
 </head>
@@ -173,7 +168,6 @@
   <h1>👻 Ghoul Swap & Coffee Order</h1>
 
   <div class="container">
-    <!-- Left: Ghoul Swap Form -->
     <div class="box">
       <form id="ghoulForm">
         <input name="realName" placeholder="Real Name*" required>
@@ -185,7 +179,6 @@
       </form>
     </div>
 
-    <!-- Right: Coffee Order -->
     <div class="coffee-box">
       <div>
         <textarea form="ghoulForm" name="coffeeOrder" placeholder="Starbucks Coffee Order"></textarea>
@@ -195,30 +188,23 @@
     </div>
   </div>
 
-  <!-- Admin login button -->
   <div class="admin-login" id="adminLogin">🔑 Admin</div>
 
-  <!-- Modal -->
   <div id="modal" class="modal">
-    <div class="modal-content" id="modalContent">
-      Saving your entry… don’t wake the spirits 👻
-    </div>
+    <div class="modal-content" id="modalContent">Saving your entry… don’t wake the spirits 👻</div>
   </div>
 
   <script>
-    // ✅ Updated Web App URL
     const scriptURL = 'https://script.google.com/macros/s/AKfycbyg8geKLRkYaWmhs9QkYHTcuk4fqnUK6rnbccf0073iiuTkL4ZM-70lJAWKxxfMbRtgew/exec';
-
     const form = document.getElementById('ghoulForm');
     const modal = document.getElementById('modal');
     const adminLogin = document.getElementById('adminLogin');
 
     form.addEventListener('submit', async e => {
       e.preventDefault();
-      modal.style.display = 'flex'; // show modal
+      modal.style.display = 'flex';
 
       const formData = new FormData(form);
-
       try {
         const response = await fetch(scriptURL, { method: 'POST', body: formData });
         const text = await response.text();
@@ -233,11 +219,10 @@
         console.error(error);
         alert('👻 Network error. Please try again.');
       } finally {
-        modal.style.display = 'none'; // hide modal
+        modal.style.display = 'none';
       }
     });
 
-    // Admin login opens Google Sheet link
     adminLogin.addEventListener('click', () => {
       const password = prompt('Enter Admin Password:');
       if (password === 'escape2025') {
